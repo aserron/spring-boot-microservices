@@ -1,0 +1,844 @@
+00:15:18.109  INFO 19828 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+00:15:18.222  INFO 19828 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 87ms. Found 2 repository interfaces.
+00:15:19.244  INFO 19828 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1b0a311] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+00:15:19.306  INFO 19828 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$8130f043] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+00:15:19.768  INFO 19828 --- [restartedMain] org.eclipse.jetty.util.log               : Logging initialized @5774ms to org.eclipse.jetty.util.log.Slf4jLog
+00:15:20.178  INFO 19828 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+00:15:20.248  INFO 19828 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 10.0.1+10
+00:15:20.434  INFO 19828 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+00:15:20.436  INFO 19828 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+00:15:20.438  INFO 19828 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 600000ms
+00:15:20.453  INFO 19828 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+00:15:20.630  INFO 19828 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+00:15:20.655  INFO 19828 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+00:15:20.657  INFO 19828 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+00:15:20.659  INFO 19828 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+00:15:20.660  INFO 19828 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+00:15:20.663  INFO 19828 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@5d880006{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.6047932106043037577.8080/],AVAILABLE}
+00:15:20.671  INFO 19828 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @6678ms
+00:15:20.899  INFO 19828 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+00:15:21.061  INFO 19828 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+00:15:21.132  INFO 19828 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+00:15:21.218  INFO 19828 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.5.Final}
+00:15:21.221  INFO 19828 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+00:15:21.325  WARN 19828 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+00:15:21.328  INFO 19828 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+00:15:21.337  INFO 19828 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+00:15:21.343  INFO 19828 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Stopped scavenging
+00:15:21.347  INFO 19828 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Stopped o.s.b.w.e.j.JettyEmbeddedWebAppContext@5d880006{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.6047932106043037577.8080/],UNAVAILABLE}
+00:15:21.353  INFO 19828 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+00:15:21.360 ERROR 19828 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1743) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:576) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:498) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1085) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:855) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:548) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:785) [spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:418) [spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337) [spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1269) [spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1257) [spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at aserron.dlocal.demo.pm.PaymentApplication.main(PaymentApplication.java:22) [classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.1.0.M2.jar:2.1.0.M2]
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+	at org.hibernate.boot.spi.XmlMappingBinderAccess.<init>(XmlMappingBinderAccess.java:43) ~[hibernate-core-5.3.5.Final.jar:5.3.5.Final]
+	at org.hibernate.boot.MetadataSources.<init>(MetadataSources.java:86) ~[hibernate-core-5.3.5.Final.jar:5.3.5.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.<init>(EntityManagerFactoryBuilderImpl.java:212) ~[hibernate-core-5.3.5.Final.jar:5.3.5.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.<init>(EntityManagerFactoryBuilderImpl.java:167) ~[hibernate-core-5.3.5.Final.jar:5.3.5.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:51) ~[spring-orm-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:390) ~[spring-orm-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:377) ~[spring-orm-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1802) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1739) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	... 21 common frames omitted
+Caused by: java.lang.ClassNotFoundException: javax.xml.bind.JAXBException
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:582) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:190) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:499) ~[na:na]
+	... 32 common frames omitted
+
+00:37:05.983  INFO 2292 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+00:37:06.071  INFO 2292 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 78ms. Found 2 repository interfaces.
+00:37:07.033  INFO 2292 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$7a11c479] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+00:37:07.089  INFO 2292 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$f99211ab] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+00:37:08.015  INFO 2292 --- [restartedMain] org.eclipse.jetty.util.log               : Logging initialized @7452ms to org.eclipse.jetty.util.log.Slf4jLog
+00:37:08.270  INFO 2292 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+00:37:08.277  INFO 2292 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 10.0.1+10
+00:37:08.426  INFO 2292 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+00:37:08.426  INFO 2292 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+00:37:08.430  INFO 2292 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 660000ms
+00:37:08.441  INFO 2292 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+00:37:08.508  INFO 2292 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+00:37:08.511  INFO 2292 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+00:37:08.512  INFO 2292 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+00:37:08.513  INFO 2292 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+00:37:08.513  INFO 2292 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+00:37:08.517  INFO 2292 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@33d66749{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.6200139954954832162.8080/],AVAILABLE}
+00:37:08.519  INFO 2292 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @7957ms
+00:37:08.693  INFO 2292 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+00:37:09.891 ERROR 2292 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
+
+java.sql.SQLNonTransientConnectionException: Public Key Retrieval is not allowed
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:110) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:832) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:456) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:240) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:207) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:136) ~[HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:369) ~[HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:198) ~[HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:467) [HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:541) [HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) [HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) [HikariCP-3.2.0.jar:na]
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:151) [spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:115) [spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:78) [spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:319) [spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:356) [spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.boot.autoconfigure.orm.jpa.DatabaseLookup.getDatabase(DatabaseLookup.java:72) [spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties.determineDatabase(JpaProperties.java:142) [spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration.jpaVendorAdapter(JpaBaseConfiguration.java:112) [spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$98e886e8.CGLIB$jpaVendorAdapter$4(<generated>) [spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$98e886e8$$FastClassBySpringCGLIB$$e167f072.invoke(<generated>) [spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:244) [spring-core-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:363) [spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$98e886e8.jpaVendorAdapter(<generated>) [spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:619) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:455) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1282) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1126) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:538) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:498) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:290) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1149) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:854) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:757) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:508) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1282) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1126) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:538) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:498) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:290) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1149) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:854) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:757) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:508) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1282) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1126) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:538) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:498) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1085) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:855) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:548) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:785) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:418) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1269) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1257) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at aserron.dlocal.demo.pm.PaymentApplication.main(PaymentApplication.java:22) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.1.0.M2.jar:2.1.0.M2]
+
+00:37:09.898  WARN 2292 --- [restartedMain] o.s.b.a.orm.jpa.DatabaseLookup           : Unable to determine jdbc url from datasource
+
+org.springframework.jdbc.support.MetaDataAccessException: Could not get Connection for extracting meta-data; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is java.sql.SQLNonTransientConnectionException: Public Key Retrieval is not allowed
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:328) ~[spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:356) ~[spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.boot.autoconfigure.orm.jpa.DatabaseLookup.getDatabase(DatabaseLookup.java:72) ~[spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties.determineDatabase(JpaProperties.java:142) [spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration.jpaVendorAdapter(JpaBaseConfiguration.java:112) [spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$98e886e8.CGLIB$jpaVendorAdapter$4(<generated>) [spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$98e886e8$$FastClassBySpringCGLIB$$e167f072.invoke(<generated>) [spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:244) [spring-core-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:363) [spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$98e886e8.jpaVendorAdapter(<generated>) [spring-boot-autoconfigure-2.1.0.M2.jar:2.1.0.M2]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:619) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:455) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1282) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1126) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:538) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:498) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:290) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1149) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:854) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:757) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:508) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1282) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1126) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:538) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:498) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:290) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1149) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:854) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:757) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:508) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1282) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1126) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:538) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:498) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1085) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:855) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:548) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:785) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:418) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1269) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1257) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at aserron.dlocal.demo.pm.PaymentApplication.main(PaymentApplication.java:22) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.1.0.M2.jar:2.1.0.M2]
+Caused by: org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is java.sql.SQLNonTransientConnectionException: Public Key Retrieval is not allowed
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:81) ~[spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:319) ~[spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	... 67 common frames omitted
+Caused by: java.sql.SQLNonTransientConnectionException: Public Key Retrieval is not allowed
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:110) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:832) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:456) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:240) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:207) ~[mysql-connector-java-8.0.12.jar:8.0.12]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:136) ~[HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:369) ~[HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:198) ~[HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:467) ~[HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:541) ~[HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[HikariCP-3.2.0.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-3.2.0.jar:na]
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:151) ~[spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:115) ~[spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:78) ~[spring-jdbc-5.1.0.RC2.jar:5.1.0.RC2]
+	... 68 common frames omitted
+
+00:37:09.966  INFO 2292 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+00:37:10.050  INFO 2292 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.5.Final}
+00:37:10.060  INFO 2292 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+00:37:10.175  WARN 2292 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+00:37:10.179  INFO 2292 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Stopped scavenging
+00:37:10.182  INFO 2292 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Stopped o.s.b.w.e.j.JettyEmbeddedWebAppContext@33d66749{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.6200139954954832162.8080/],UNAVAILABLE}
+00:37:10.189  INFO 2292 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+00:37:10.192 ERROR 2292 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1743) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:576) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:498) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1085) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:855) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:548) ~[spring-context-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:785) [spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:418) [spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337) [spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1269) [spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1257) [spring-boot-2.1.0.M2.jar:2.1.0.M2]
+	at aserron.dlocal.demo.pm.PaymentApplication.main(PaymentApplication.java:22) [classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.1.0.M2.jar:2.1.0.M2]
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+	at org.hibernate.boot.spi.XmlMappingBinderAccess.<init>(XmlMappingBinderAccess.java:43) ~[hibernate-core-5.3.5.Final.jar:5.3.5.Final]
+	at org.hibernate.boot.MetadataSources.<init>(MetadataSources.java:86) ~[hibernate-core-5.3.5.Final.jar:5.3.5.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.<init>(EntityManagerFactoryBuilderImpl.java:212) ~[hibernate-core-5.3.5.Final.jar:5.3.5.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.<init>(EntityManagerFactoryBuilderImpl.java:167) ~[hibernate-core-5.3.5.Final.jar:5.3.5.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:51) ~[spring-orm-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:390) ~[spring-orm-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:377) ~[spring-orm-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1802) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1739) ~[spring-beans-5.1.0.RC2.jar:5.1.0.RC2]
+	... 21 common frames omitted
+Caused by: java.lang.ClassNotFoundException: javax.xml.bind.JAXBException
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:582) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:190) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:499) ~[na:na]
+	... 32 common frames omitted
+
+02:01:13.774  INFO 12420 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+02:01:13.820  INFO 12420 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40ms. Found 2 repository interfaces.
+02:01:14.131  INFO 12420 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$e6e9d14b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:01:14.146  INFO 12420 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$666a1e7d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:01:14.341  INFO 12420 --- [restartedMain] org.eclipse.jetty.util.log               : Logging initialized @1978ms to org.eclipse.jetty.util.log.Slf4jLog
+02:01:14.497  INFO 12420 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+02:01:14.499  INFO 12420 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_171-b11
+02:01:14.574  INFO 12420 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+02:01:14.575  INFO 12420 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+02:01:14.577  INFO 12420 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 660000ms
+02:01:14.585  INFO 12420 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+02:01:14.635  INFO 12420 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+02:01:14.637  INFO 12420 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+02:01:14.638  INFO 12420 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+02:01:14.638  INFO 12420 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+02:01:14.638  INFO 12420 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+02:01:14.641  INFO 12420 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@75bd3505{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.2647108711016374671.8080/],AVAILABLE}
+02:01:14.642  INFO 12420 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @2279ms
+02:01:14.751  INFO 12420 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+02:01:14.845  INFO 12420 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+02:01:14.894  INFO 12420 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+02:01:14.945  INFO 12420 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.5.Final}
+02:01:14.947  INFO 12420 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+02:01:15.047  INFO 12420 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+02:01:15.237  INFO 12420 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+02:01:15.713  INFO 12420 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+02:01:15.966  INFO 12420 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:01:15.966
+02:01:15.973  INFO 12420 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:01:15.973
+02:01:16.347  INFO 12420 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService  'applicationTaskExecutor'
+02:01:16.663  WARN 12420 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02:01:16.990  INFO 12420 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+02:01:17.054  INFO 12420 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+02:01:17.081  INFO 12420 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:01:17.081] JOB: executed scheduled task saleRepository=446382590
+02:01:17.085  INFO 12420 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+02:01:17.109  INFO 12420 --- [scheduling-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+02:01:17.113  INFO 12420 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@258d16a7{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:01:17.116  INFO 12420 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 8080 (http/1.1) with context path '/'
+02:01:47.082  INFO 12420 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:01:47.082] JOB: executed scheduled task saleRepository=446382590
+02:02:17.082  INFO 12420 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:02:17.082] JOB: executed scheduled task saleRepository=446382590
+02:02:47.082  INFO 12420 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:02:47.082] JOB: executed scheduled task saleRepository=446382590
+02:03:17.082  INFO 12420 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:03:17.082] JOB: executed scheduled task saleRepository=446382590
+02:03:47.083  INFO 12420 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:03:47.083] JOB: executed scheduled task saleRepository=446382590
+02:04:17.082  INFO 12420 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:04:17.082] JOB: executed scheduled task saleRepository=446382590
+02:04:47.082  INFO 12420 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:04:47.082] JOB: executed scheduled task saleRepository=446382590
+02:06:59.879  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+02:06:59.930  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 44ms. Found 2 repository interfaces.
+02:07:00.305  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d723bc94] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:07:00.322  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$56a409c6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:07:00.528  INFO 9412 --- [restartedMain] org.eclipse.jetty.util.log               : Logging initialized @2844ms to org.eclipse.jetty.util.log.Slf4jLog
+02:07:00.707  INFO 9412 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+02:07:00.709  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_171-b11
+02:07:00.789  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+02:07:00.789  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+02:07:00.793  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 660000ms
+02:07:00.801  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+02:07:00.852  INFO 9412 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+02:07:00.855  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+02:07:00.855  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+02:07:00.855  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+02:07:00.855  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+02:07:00.858  INFO 9412 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@4d2c3572{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.162335244322160697.8080/],AVAILABLE}
+02:07:00.858  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @3175ms
+02:07:00.965  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+02:07:01.064  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+02:07:01.113  INFO 9412 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+02:07:01.165  INFO 9412 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.5.Final}
+02:07:01.167  INFO 9412 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+02:07:01.307  INFO 9412 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+02:07:01.503  INFO 9412 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+02:07:01.991  INFO 9412 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+02:07:02.268  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:07:02.268
+02:07:02.281  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:07:02.281
+02:07:02.786  INFO 9412 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService  'applicationTaskExecutor'
+02:07:03.042  WARN 9412 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02:07:03.488  INFO 9412 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+02:07:03.567  INFO 9412 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+02:07:03.603  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:07:03.603] JOB: executed scheduled task saleRepository=-2145446936
+02:07:03.607  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+02:07:03.636  INFO 9412 --- [scheduling-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+02:07:03.650  INFO 9412 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@46d83a17{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:07:03.653  INFO 9412 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 8080 (http/1.1) with context path '/'
+02:07:33.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:07:33.602] JOB: executed scheduled task saleRepository=-2145446936
+02:08:03.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:08:03.602] JOB: executed scheduled task saleRepository=-2145446936
+02:08:33.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:08:33.602] JOB: executed scheduled task saleRepository=-2145446936
+02:09:03.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:09:03.602] JOB: executed scheduled task saleRepository=-2145446936
+02:09:33.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:09:33.602] JOB: executed scheduled task saleRepository=-2145446936
+02:10:03.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:10:03.602] JOB: executed scheduled task saleRepository=-2145446936
+02:10:33.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:10:33.602] JOB: executed scheduled task saleRepository=-2145446936
+02:11:03.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:11:03.602] JOB: executed scheduled task saleRepository=-2145446936
+02:11:33.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:11:33.602] JOB: executed scheduled task saleRepository=-2145446936
+02:12:03.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:12:03.602] JOB: executed scheduled task saleRepository=-2145446936
+02:12:33.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:12:33.602] JOB: executed scheduled task saleRepository=-2145446936
+02:13:03.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:13:03.602] JOB: executed scheduled task saleRepository=-2145446936
+02:13:33.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:13:33.602] JOB: executed scheduled task saleRepository=-2145446936
+02:14:03.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:14:03.602] JOB: executed scheduled task saleRepository=-2145446936
+02:14:33.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:14:33.602] JOB: executed scheduled task saleRepository=-2145446936
+02:15:03.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:15:03.602] JOB: executed scheduled task saleRepository=-2145446936
+02:15:33.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:15:33.602] JOB: executed scheduled task saleRepository=-2145446936
+02:16:03.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:16:03.602] JOB: executed scheduled task saleRepository=-2145446936
+02:16:33.603  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:16:33.603] JOB: executed scheduled task saleRepository=-2145446936
+02:17:03.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:17:03.602] JOB: executed scheduled task saleRepository=-2145446936
+02:17:33.602  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:17:33.602] JOB: executed scheduled task saleRepository=-2145446936
+02:18:03.603  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:18:03.603] JOB: executed scheduled task saleRepository=-2145446936
+02:18:33.270  INFO 9412 --- [Thread-16] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+02:18:33.271  INFO 9412 --- [Thread-16] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+02:18:33.272  INFO 9412 --- [Thread-16] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+02:18:33.274  INFO 9412 --- [Thread-16] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+02:18:33.277  INFO 9412 --- [Thread-16] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+02:18:33.280  INFO 9412 --- [Thread-16] o.e.jetty.server.AbstractConnector       : Stopped ServerConnector@46d83a17{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:18:33.280  INFO 9412 --- [Thread-16] org.eclipse.jetty.server.session         : node0 Stopped scavenging
+02:18:33.281  INFO 9412 --- [Thread-16] o.e.j.s.h.ContextHandler.application     : Destroying Spring FrameworkServlet 'dispatcherServlet'
+02:18:33.281  INFO 9412 --- [Thread-16] o.e.jetty.server.handler.ContextHandler  : Stopped o.s.b.w.e.j.JettyEmbeddedWebAppContext@4d2c3572{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.162335244322160697.8080/],UNAVAILABLE}
+02:18:33.788  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+02:18:33.803  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14ms. Found 2 repository interfaces.
+02:18:33.862  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d723bc94] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:18:33.863  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$56a409c6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:18:33.969  INFO 9412 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+02:18:33.969  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_171-b11
+02:18:33.972  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+02:18:33.972  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+02:18:33.972  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 660000ms
+02:18:33.972  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+02:18:33.985  INFO 9412 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+02:18:33.985  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+02:18:33.985  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+02:18:33.985  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+02:18:33.985  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+02:18:33.986  INFO 9412 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@2fc8df0b{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.2947001700202121998.8080/],AVAILABLE}
+02:18:33.986  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @696304ms
+02:18:34.019  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+02:18:34.023  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+02:18:34.033  INFO 9412 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+02:18:34.045  INFO 9412 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+02:18:34.083  INFO 9412 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+02:18:34.131  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:18:34.131
+02:18:34.135  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:18:34.135
+02:18:34.235  INFO 9412 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService  'applicationTaskExecutor'
+02:18:34.281  WARN 9412 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02:18:34.356  INFO 9412 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+02:18:34.372  INFO 9412 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+02:18:34.386  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:18:34.386] JOB: executed scheduled task saleRepository=803442769
+02:18:34.386  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+02:18:34.388  INFO 9412 --- [scheduling-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+02:18:34.392  INFO 9412 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@215ab811{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:18:34.393  INFO 9412 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 8080 (http/1.1) with context path '/'
+02:18:34.396  INFO 9412 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+02:19:04.386  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:19:04.386] JOB: executed scheduled task saleRepository=803442769
+02:19:34.387  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:19:34.387] JOB: executed scheduled task saleRepository=803442769
+02:19:35.227  INFO 9412 --- [Thread-22] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+02:19:35.228  INFO 9412 --- [Thread-22] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+02:19:35.229  INFO 9412 --- [Thread-22] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+02:19:35.230  INFO 9412 --- [Thread-22] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+02:19:35.234  INFO 9412 --- [Thread-22] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+02:19:35.236  INFO 9412 --- [Thread-22] o.e.jetty.server.AbstractConnector       : Stopped ServerConnector@215ab811{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:19:35.236  INFO 9412 --- [Thread-22] org.eclipse.jetty.server.session         : node0 Stopped scavenging
+02:19:35.236  INFO 9412 --- [Thread-22] o.e.j.s.h.ContextHandler.application     : Destroying Spring FrameworkServlet 'dispatcherServlet'
+02:19:35.237  INFO 9412 --- [Thread-22] o.e.jetty.server.handler.ContextHandler  : Stopped o.s.b.w.e.j.JettyEmbeddedWebAppContext@2fc8df0b{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.2947001700202121998.8080/],UNAVAILABLE}
+02:19:35.739  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+02:19:35.753  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14ms. Found 2 repository interfaces.
+02:19:35.809  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d723bc94] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:19:35.810  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$56a409c6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:19:35.908  INFO 9412 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+02:19:35.908  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_171-b11
+02:19:35.911  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+02:19:35.911  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+02:19:35.911  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 600000ms
+02:19:35.912  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+02:19:35.924  INFO 9412 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+02:19:35.924  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+02:19:35.924  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+02:19:35.924  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+02:19:35.924  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+02:19:35.925  INFO 9412 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@15880812{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.5816095089748130429.8080/],AVAILABLE}
+02:19:35.925  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @758243ms
+02:19:35.958  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+02:19:35.961  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+02:19:35.971  INFO 9412 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+02:19:35.982  INFO 9412 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+02:19:36.018  INFO 9412 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+02:19:36.062  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:19:36.062
+02:19:36.067  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:19:36.067
+02:19:36.163  INFO 9412 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService  'applicationTaskExecutor'
+02:19:36.210  WARN 9412 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02:19:36.283  INFO 9412 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+02:19:36.298  INFO 9412 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+02:19:36.310  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:19:36.310] JOB: executed scheduled task saleRepository=1831100804
+02:19:36.311  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+02:19:36.312  INFO 9412 --- [scheduling-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+02:19:36.316  INFO 9412 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@44745d39{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:19:36.317  INFO 9412 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 8080 (http/1.1) with context path '/'
+02:19:36.319  INFO 9412 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+02:20:06.310  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:20:06.310] JOB: executed scheduled task saleRepository=1831100804
+02:20:36.310  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:20:36.310] JOB: executed scheduled task saleRepository=1831100804
+02:21:06.310  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:21:06.310] JOB: executed scheduled task saleRepository=1831100804
+02:21:30.609  INFO 9412 --- [Thread-35] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+02:21:30.610  INFO 9412 --- [Thread-35] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+02:21:30.610  INFO 9412 --- [Thread-35] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+02:21:30.611  INFO 9412 --- [Thread-35] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+02:21:30.615  INFO 9412 --- [Thread-35] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+02:21:30.616  INFO 9412 --- [Thread-35] o.e.jetty.server.AbstractConnector       : Stopped ServerConnector@44745d39{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:21:30.617  INFO 9412 --- [Thread-35] org.eclipse.jetty.server.session         : node0 Stopped scavenging
+02:21:30.617  INFO 9412 --- [Thread-35] o.e.j.s.h.ContextHandler.application     : Destroying Spring FrameworkServlet 'dispatcherServlet'
+02:21:30.618  INFO 9412 --- [Thread-35] o.e.jetty.server.handler.ContextHandler  : Stopped o.s.b.w.e.j.JettyEmbeddedWebAppContext@15880812{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.5816095089748130429.8080/],UNAVAILABLE}
+02:21:31.150  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+02:21:31.164  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13ms. Found 2 repository interfaces.
+02:21:31.218  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d723bc94] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:21:31.219  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$56a409c6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:21:31.376  INFO 9412 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+02:21:31.376  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_171-b11
+02:21:31.381  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+02:21:31.381  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+02:21:31.381  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 600000ms
+02:21:31.382  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+02:21:31.401  INFO 9412 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+02:21:31.401  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+02:21:31.401  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+02:21:31.401  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+02:21:31.401  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+02:21:31.402  INFO 9412 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@20c8214a{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.2760123450749742848.8080/],AVAILABLE}
+02:21:31.403  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @873720ms
+02:21:31.450  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+02:21:31.502  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+02:21:31.513  INFO 9412 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+02:21:31.527  INFO 9412 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+02:21:31.598  INFO 9412 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+02:21:31.670  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:21:31.670
+02:21:31.674  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:21:31.674
+02:21:31.801  INFO 9412 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService  'applicationTaskExecutor'
+02:21:31.847  WARN 9412 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02:21:31.922  INFO 9412 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+02:21:31.940  INFO 9412 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+02:21:31.952  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:21:31.952] JOB: executed scheduled task saleRepository=679888188
+02:21:31.955  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+02:21:31.957  INFO 9412 --- [scheduling-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+02:21:31.962  INFO 9412 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@70a86e10{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:21:31.963  INFO 9412 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 8080 (http/1.1) with context path '/'
+02:21:31.965  INFO 9412 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+02:21:40.429  INFO 9412 --- [Thread-49] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+02:21:40.430  INFO 9412 --- [Thread-49] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+02:21:40.436  INFO 9412 --- [Thread-49] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+02:21:40.436  INFO 9412 --- [Thread-49] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+02:21:40.457  INFO 9412 --- [Thread-49] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+02:21:40.459  INFO 9412 --- [Thread-49] o.e.jetty.server.AbstractConnector       : Stopped ServerConnector@70a86e10{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:21:40.471  INFO 9412 --- [Thread-49] org.eclipse.jetty.server.session         : node0 Stopped scavenging
+02:21:40.471  INFO 9412 --- [Thread-49] o.e.j.s.h.ContextHandler.application     : Destroying Spring FrameworkServlet 'dispatcherServlet'
+02:21:40.471  INFO 9412 --- [Thread-49] o.e.jetty.server.handler.ContextHandler  : Stopped o.s.b.w.e.j.JettyEmbeddedWebAppContext@20c8214a{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.2760123450749742848.8080/],UNAVAILABLE}
+02:21:41.048  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+02:21:41.062  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14ms. Found 2 repository interfaces.
+02:21:41.118  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d723bc94] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:21:41.119  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$56a409c6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:21:41.220  INFO 9412 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+02:21:41.220  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_171-b11
+02:21:41.222  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+02:21:41.222  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+02:21:41.223  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 660000ms
+02:21:41.223  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+02:21:41.236  INFO 9412 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+02:21:41.236  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+02:21:41.236  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+02:21:41.236  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+02:21:41.237  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+02:21:41.237  INFO 9412 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@6caa2a77{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.227040820922382998.8080/],AVAILABLE}
+02:21:41.237  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @883555ms
+02:21:41.271  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+02:21:41.275  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+02:21:41.284  INFO 9412 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+02:21:41.297  INFO 9412 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+02:21:41.330  INFO 9412 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+02:21:41.372  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:21:41.372
+02:21:41.375  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:21:41.375
+02:21:41.469  INFO 9412 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService  'applicationTaskExecutor'
+02:21:41.516  WARN 9412 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02:21:41.589  INFO 9412 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+02:21:41.606  INFO 9412 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+02:21:41.618  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:21:41.618] JOB: executed scheduled task saleRepository=2101430145
+02:21:41.618  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+02:21:41.621  INFO 9412 --- [scheduling-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+02:21:41.625  INFO 9412 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@5a81a019{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:21:41.626  INFO 9412 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 8080 (http/1.1) with context path '/'
+02:21:41.628  INFO 9412 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+02:21:55.149  INFO 9412 --- [Thread-63] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+02:21:55.149  INFO 9412 --- [Thread-63] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+02:21:55.150  INFO 9412 --- [Thread-63] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+02:21:55.150  INFO 9412 --- [Thread-63] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+02:21:55.154  INFO 9412 --- [Thread-63] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+02:21:55.155  INFO 9412 --- [Thread-63] o.e.jetty.server.AbstractConnector       : Stopped ServerConnector@5a81a019{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:21:55.156  INFO 9412 --- [Thread-63] org.eclipse.jetty.server.session         : node0 Stopped scavenging
+02:21:55.156  INFO 9412 --- [Thread-63] o.e.j.s.h.ContextHandler.application     : Destroying Spring FrameworkServlet 'dispatcherServlet'
+02:21:55.156  INFO 9412 --- [Thread-63] o.e.jetty.server.handler.ContextHandler  : Stopped o.s.b.w.e.j.JettyEmbeddedWebAppContext@6caa2a77{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.227040820922382998.8080/],UNAVAILABLE}
+02:21:55.627  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+02:21:55.644  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17ms. Found 2 repository interfaces.
+02:21:55.704  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d723bc94] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:21:55.705  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$56a409c6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:21:55.835  INFO 9412 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+02:21:55.835  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_171-b11
+02:21:55.838  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+02:21:55.838  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+02:21:55.839  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 600000ms
+02:21:55.840  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+02:21:55.852  INFO 9412 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+02:21:55.852  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+02:21:55.853  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+02:21:55.853  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+02:21:55.853  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+02:21:55.853  INFO 9412 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@1c2fd3d5{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.4946924584157804861.8080/],AVAILABLE}
+02:21:55.854  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @898171ms
+02:21:55.885  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
+02:21:55.888  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
+02:21:55.898  INFO 9412 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+02:21:55.911  INFO 9412 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+02:21:55.943  INFO 9412 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+02:21:55.986  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:21:55.986
+02:21:55.990  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:21:55.990
+02:21:56.091  INFO 9412 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService  'applicationTaskExecutor'
+02:21:56.136  WARN 9412 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02:21:56.212  INFO 9412 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+02:21:56.229  INFO 9412 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+02:21:56.251  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+02:21:56.252  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:21:56.252] JOB: executed scheduled task saleRepository=1724405298
+02:21:56.255  INFO 9412 --- [scheduling-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+02:21:56.259  INFO 9412 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@384ed528{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:21:56.260  INFO 9412 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 8080 (http/1.1) with context path '/'
+02:21:56.264  INFO 9412 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+02:22:25.847  INFO 9412 --- [Thread-77] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+02:22:25.848  INFO 9412 --- [Thread-77] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+02:22:25.848  INFO 9412 --- [Thread-77] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+02:22:25.849  INFO 9412 --- [Thread-77] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+02:22:25.850  INFO 9412 --- [Thread-77] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
+02:22:25.851  INFO 9412 --- [Thread-77] o.e.jetty.server.AbstractConnector       : Stopped ServerConnector@384ed528{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:22:25.852  INFO 9412 --- [Thread-77] org.eclipse.jetty.server.session         : node0 Stopped scavenging
+02:22:25.852  INFO 9412 --- [Thread-77] o.e.j.s.h.ContextHandler.application     : Destroying Spring FrameworkServlet 'dispatcherServlet'
+02:22:25.852  INFO 9412 --- [Thread-77] o.e.jetty.server.handler.ContextHandler  : Stopped o.s.b.w.e.j.JettyEmbeddedWebAppContext@1c2fd3d5{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.4946924584157804861.8080/],UNAVAILABLE}
+02:22:26.343  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+02:22:26.357  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14ms. Found 2 repository interfaces.
+02:22:26.409  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d723bc94] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:22:26.410  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$56a409c6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:22:26.504  INFO 9412 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+02:22:26.504  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_171-b11
+02:22:26.506  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+02:22:26.506  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+02:22:26.506  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 660000ms
+02:22:26.507  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+02:22:26.519  INFO 9412 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+02:22:26.519  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+02:22:26.519  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+02:22:26.520  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+02:22:26.520  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+02:22:26.520  INFO 9412 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@56a4be0b{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.8935454377273900588.8080/],AVAILABLE}
+02:22:26.521  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @928838ms
+02:22:26.551  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Starting...
+02:22:26.554  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Start completed.
+02:22:26.563  INFO 9412 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+02:22:26.574  INFO 9412 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+02:22:26.606  INFO 9412 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+02:22:26.646  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:22:26.646
+02:22:26.649  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:22:26.649
+02:22:26.743  INFO 9412 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService  'applicationTaskExecutor'
+02:22:26.790  WARN 9412 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02:22:26.861  INFO 9412 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+02:22:26.877  INFO 9412 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+02:22:26.889  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:22:26.889] JOB: executed scheduled task saleRepository=1499859985
+02:22:26.889  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+02:22:26.891  INFO 9412 --- [scheduling-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+02:22:26.896  INFO 9412 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@790316e0{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:22:26.899  INFO 9412 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 8080 (http/1.1) with context path '/'
+02:22:26.902  INFO 9412 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+02:22:56.889  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:22:56.889] JOB: executed scheduled task saleRepository=1499859985
+02:23:06.580  INFO 9412 --- [Thread-91] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+02:23:06.581  INFO 9412 --- [Thread-91] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+02:23:06.581  INFO 9412 --- [Thread-91] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+02:23:06.582  INFO 9412 --- [Thread-91] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
+02:23:06.586  INFO 9412 --- [Thread-91] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
+02:23:06.588  INFO 9412 --- [Thread-91] o.e.jetty.server.AbstractConnector       : Stopped ServerConnector@790316e0{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:23:06.588  INFO 9412 --- [Thread-91] org.eclipse.jetty.server.session         : node0 Stopped scavenging
+02:23:06.588  INFO 9412 --- [Thread-91] o.e.j.s.h.ContextHandler.application     : Destroying Spring FrameworkServlet 'dispatcherServlet'
+02:23:06.589  INFO 9412 --- [Thread-91] o.e.jetty.server.handler.ContextHandler  : Stopped o.s.b.w.e.j.JettyEmbeddedWebAppContext@56a4be0b{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.8935454377273900588.8080/],UNAVAILABLE}
+02:23:07.044  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+02:23:07.057  INFO 9412 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13ms. Found 2 repository interfaces.
+02:23:07.110  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d723bc94] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:23:07.111  INFO 9412 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$56a409c6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:23:07.205  INFO 9412 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+02:23:07.205  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_171-b11
+02:23:07.208  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+02:23:07.208  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+02:23:07.208  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 660000ms
+02:23:07.209  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+02:23:07.223  INFO 9412 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+02:23:07.224  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+02:23:07.224  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+02:23:07.224  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+02:23:07.224  INFO 9412 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+02:23:07.226  INFO 9412 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@56746241{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.9090067789900659783.8080/],AVAILABLE}
+02:23:07.226  INFO 9412 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @969544ms
+02:23:07.257  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Starting...
+02:23:07.261  INFO 9412 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Start completed.
+02:23:07.270  INFO 9412 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+02:23:07.280  INFO 9412 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+02:23:07.311  INFO 9412 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+02:23:07.351  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:23:07.351
+02:23:07.355  INFO 9412 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:23:07.355
+02:23:07.448  INFO 9412 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService  'applicationTaskExecutor'
+02:23:07.494  WARN 9412 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02:23:07.565  INFO 9412 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+02:23:07.581  INFO 9412 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+02:23:07.593  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:23:07.593] JOB: executed scheduled task saleRepository=-2070760060
+02:23:07.594  INFO 9412 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+02:23:07.595  INFO 9412 --- [scheduling-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+02:23:07.600  INFO 9412 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@67b00c4e{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:23:07.601  INFO 9412 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 8080 (http/1.1) with context path '/'
+02:23:07.603  INFO 9412 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+02:23:37.595  INFO 9412 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:23:37.595] JOB: executed scheduled task saleRepository=-2070760060
+02:35:07.117  INFO 13984 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+02:35:07.162  INFO 13984 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40ms. Found 2 repository interfaces.
+02:35:07.480  INFO 13984 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$177c6e66] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:35:07.495  INFO 13984 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$96fcbb98] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02:35:07.697  INFO 13984 --- [restartedMain] org.eclipse.jetty.util.log               : Logging initialized @2318ms to org.eclipse.jetty.util.log.Slf4jLog
+02:35:07.855  INFO 13984 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+02:35:07.857  INFO 13984 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_171-b11
+02:35:07.936  INFO 13984 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+02:35:07.936  INFO 13984 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+02:35:07.937  INFO 13984 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 600000ms
+02:35:07.945  INFO 13984 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+02:35:07.996  INFO 13984 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+02:35:07.998  INFO 13984 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+02:35:07.998  INFO 13984 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+02:35:07.998  INFO 13984 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+02:35:07.999  INFO 13984 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+02:35:08.003  INFO 13984 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@5e2e9960{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.6232462600478204924.8080/],AVAILABLE}
+02:35:08.003  INFO 13984 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @2623ms
+02:35:08.105  INFO 13984 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+02:35:08.202  INFO 13984 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+02:35:08.251  INFO 13984 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+02:35:08.302  INFO 13984 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.5.Final}
+02:35:08.303  INFO 13984 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+02:35:08.403  INFO 13984 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+02:35:08.588  INFO 13984 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+02:35:09.063  INFO 13984 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+02:35:09.321  INFO 13984 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:35:09.321
+02:35:09.329  INFO 13984 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 02:35:09.329
+02:35:09.715  INFO 13984 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService  'applicationTaskExecutor'
+02:35:09.952  WARN 13984 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02:35:10.293  INFO 13984 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+02:35:10.364  INFO 13984 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+02:35:10.393  INFO 13984 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:35:10.393] JOB: executed scheduled task saleRepository=-1378493832
+02:35:10.398  INFO 13984 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+02:35:10.423  INFO 13984 --- [scheduling-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+02:35:10.429  INFO 13984 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@5ce1330a{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+02:35:10.432  INFO 13984 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 8080 (http/1.1) with context path '/'
+02:35:40.395  INFO 13984 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:35:40.395] JOB: executed scheduled task saleRepository=-1378493832
+02:36:10.395  INFO 13984 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [02:36:10.395] JOB: executed scheduled task saleRepository=-1378493832
+03:08:48.563  INFO 12984 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+03:08:48.671  INFO 12984 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 96ms. Found 2 repository interfaces.
+03:08:49.433  INFO 12984 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$ec638a15] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+03:08:49.455  INFO 12984 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$6be3d747] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+03:08:49.865  INFO 12984 --- [restartedMain] org.eclipse.jetty.util.log               : Logging initialized @4942ms to org.eclipse.jetty.util.log.Slf4jLog
+03:08:50.076  INFO 12984 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 8080
+03:08:50.082  INFO 12984 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_171-b11
+03:08:50.225  INFO 12984 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+03:08:50.226  INFO 12984 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+03:08:50.259  INFO 12984 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 660000ms
+03:08:50.271  INFO 12984 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+03:08:50.383  INFO 12984 --- [restartedMain] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+03:08:50.389  INFO 12984 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+03:08:50.391  INFO 12984 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+03:08:50.392  INFO 12984 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+03:08:50.393  INFO 12984 --- [restartedMain] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+03:08:50.400  INFO 12984 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@65b89d86{application,/,[file:///C:/Users/Andres/AppData/Local/Temp/jetty-docbase.276883791715242251.8080/],AVAILABLE}
+03:08:50.417  INFO 12984 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @5495ms
+03:08:50.604  INFO 12984 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+03:08:50.865  INFO 12984 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+03:08:50.979  INFO 12984 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+03:08:51.171  INFO 12984 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.5.Final}
+03:08:51.178  INFO 12984 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+03:08:51.382  INFO 12984 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+03:08:52.221  INFO 12984 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+03:08:53.566  INFO 12984 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+03:08:55.373  INFO 12984 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 03:08:55.373
+03:08:55.398  INFO 12984 --- [restartedMain] o.s.scheduling.config.ScheduledTask      : Task Scheduler Created: 03:08:55.398
+03:08:56.937  INFO 12984 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService  'applicationTaskExecutor'
+03:08:57.266  WARN 12984 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+03:08:57.877  INFO 12984 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+03:08:57.975  INFO 12984 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+03:08:58.005  INFO 12984 --- [scheduling-1] o.s.scheduling.config.ScheduledTask      : [03:08:58.005] JOB: executed scheduled task saleRepository=1902285159
+03:08:58.011  INFO 12984 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+03:08:58.049  INFO 12984 --- [scheduling-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+03:08:58.062  INFO 12984 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@2e20d5a3{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+03:08:58.066  INFO 12984 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 8080 (http/1.1) with context path '/'
