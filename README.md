@@ -21,3 +21,9 @@ Usage Guide
 </ul>
 <p>Access the apps at localhost as explained in the file.
 REST Actions will be found at the usage doc.</p>
+
+
+<h2>Changes</h2>
+<ul> 
+ <li>Updated to Spring Boot 2.1.0 M2</li>
+ </ul>
