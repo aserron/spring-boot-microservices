@@ -2,18 +2,23 @@
 
 <h2>SprintBoot2 based Microservices Demo.</h2>
 
+<p>
+First, thanks for you time and I hope you find this work interesting, please feel free to contact me for any comment, question or inquiry on it.
+</p>
+
 <h3>Production Notes</h3><p>
 The solution presented here was coded as a challenge test & proof concept for a respected contractor.
 One week used for getting in touch with the technologies requested, two weeks for the development process itself.
 NetBeans, Eclipse & STS were used for code quality, debugging and visualize the application structure and functionality.
 Other tools where used to test the REST interface for expected behaviors.</p>
 
-<p>
-The code at this date is not polished nor changed, reflecting the actual challenge delivery state.
-I would like to share it as a good technology & development proof of concept.
 
-It’s possible & will be extended, polished, even features addition are planned as the demo itself reflect a recurrent real life up to date development challenge.
-I hope you find it interesting, please feel free to contact me for any comment, question or inquiry on it.
+<h3>The challenge as a great technology & development proof of concept.</h3>
+
+<p>It’s possible & will be extended, polished, even feature addition are planned as the demo itself reflect the status at the actual presentation of the development challenge result.
+
+To this date, the code reflect the result without code cleanning, fixes or features added.
+The documentation part of the delivery package details every aspect of the application provided.
 </p>
 
 <h3>Required Technologies</h3>
