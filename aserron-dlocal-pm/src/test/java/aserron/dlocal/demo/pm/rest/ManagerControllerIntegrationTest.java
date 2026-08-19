@@ -8,8 +8,17 @@ import aserron.dlocal.demo.pm.data.service.TransactionJobService;
 import aserron.dlocal.demo.pm.rest.dto.CreateSaleRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +38,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -212,5 +222,58 @@ public class ManagerControllerIntegrationTest {
         assertNotNull(updated);
         assertNotNull(updated.getStatus());
         assertEquals(true, updated.getStatus() == TransactionStatus.PAID || updated.getStatus() == TransactionStatus.REJECTED);
+    }
+
+    @Test
+    public void createSaleConcurrentRaceCondition() throws Exception {
+        int concurrentRequests = 10;
+        ExecutorService executor = Executors.newFixedThreadPool(concurrentRequests);
+        CountDownLatch startSignal = new CountDownLatch(1);
+        CountDownLatch doneSignal = new CountDownLatch(concurrentRequests);
+
+        Set<String> generatedIds = ConcurrentHashMap.newKeySet();
+        List<Integer> statusCodes = Collections.synchronizedList(new ArrayList<>());
+
+        CreateSaleRequest request = new CreateSaleRequest("USD", new BigDecimal("299.99"), 9999L, 1L);
+        String payload = objectMapper.writeValueAsString(request);
+
+        for (int i = 0; i < concurrentRequests; i++) {
+            executor.submit(() -> {
+                try {
+                    startSignal.await(); // Align all threads to fire simultaneously
+                    MvcResult result = mockMvc.perform(post("/pm/sale")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(payload))
+                            .andReturn();
+
+                    statusCodes.add(result.getResponse().getStatus());
+                    String content = result.getResponse().getContentAsString();
+                    if (content != null && content.contains("id")) {
+                        String id = objectMapper.readTree(content).get("id").asText();
+                        generatedIds.add(id);
+                    }
+                } catch (Exception ignored) {
+                } finally {
+                    doneSignal.countDown();
+                }
+            });
+        }
+
+        // Fire all 10 threads concurrently
+        startSignal.countDown();
+        boolean completed = doneSignal.await(10, TimeUnit.SECONDS);
+        executor.shutdown();
+
+        assertTrue("All concurrent requests should finish within 10 seconds", completed);
+        assertEquals("All 10 concurrent requests must resolve to the exact same sale ID", 1, generatedIds.size());
+        assertEquals(10, statusCodes.size());
+        for (int code : statusCodes) {
+            assertEquals("All responses must be 200 OK without 500 errors", 200, code);
+        }
+
+        long countInDb = saleRepository.findAllByMerchantId(1L).stream()
+                .filter(s -> s.getTransactionId() != null && s.getTransactionId() == 9999L)
+                .count();
+        assertEquals("Database unique constraint and collision recovery must ensure exactly 1 record in database", 1, countInDb);
     }
 }
