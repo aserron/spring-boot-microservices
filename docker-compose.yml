@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0.33
+    container_name: dlocal-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: dlocal_demo_db
+      MYSQL_USER: dlocal_user
+      MYSQL_PASSWORD: dlocal_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./SQL CREATE/create_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "dlocal_user", "-pdlocal_pass"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  merchant-service:
+    image: aserron/merchant-service:latest
+    container_name: dlocal-merchant-service
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/dlocal_demo_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: dlocal_user
+      SPRING_DATASOURCE_PASSWORD: dlocal_pass
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:8081/merchant/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pm-service:
+    image: aserron/pm-service:latest
+    container_name: dlocal-pm-service
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      merchant-service:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/dlocal_demo_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: dlocal_user
+      SPRING_DATASOURCE_PASSWORD: dlocal_pass
+      MERCHANT_SERVICE_URL: http://merchant-service:8081/merchant/api
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:8080/pm/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:
