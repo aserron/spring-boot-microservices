@@ -56,6 +56,9 @@ public class ManagerControllerIntegrationTest {
     private SaleRepository saleRepository;
 
     @Autowired
+    private aserron.dlocal.demo.pm.data.repositories.IdempotencyRecordRepository idempotencyRecordRepository;
+
+    @Autowired
     private TransactionJobService transactionJobService;
 
     @MockBean
@@ -67,6 +70,7 @@ public class ManagerControllerIntegrationTest {
     @Before
     public void setup() {
         saleRepository.deleteAll();
+        idempotencyRecordRepository.deleteAll();
 
         // Default mock behavior for merchant check: merchant 1 exists, merchant 999 does not
         Mockito.when(merchantService.getMerchantById(1L))
