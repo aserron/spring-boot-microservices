@@ -1,32 +1,25 @@
-/*
- * Response Entity Exception Hanlder
- */
 package aserron.dlocal.demo.pm.rest.exception;
 
 import aserron.dlocal.demo.pm.data.service.SaleServiceException;
+import aserron.dlocal.demo.pm.rest.controllers.MerchantNotFoundException;
+import aserron.dlocal.demo.pm.rest.controllers.SaleNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.aspectj.util.LangUtil;
-import org.hibernate.service.spi.ServiceException;
-import org.springframework.data.rest.core.RepositoryConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-@Component
 public class PmResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {
@@ -34,128 +27,132 @@ public class PmResponseEntityExceptionHandler extends ResponseEntityExceptionHan
         IllegalStateException.class
     })
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
+                .withStatus(status)
+                .withError_code(status.name())
+                .withMessage(ex.getMessage())
+                .withDetail(ex.getLocalizedMessage())
+                .build();
+        return new ResponseEntity<>(response, status);
+    }
 
-        // String bodyResponse;
-        HttpHeaders headers;
-
-        headers = new HttpHeaders();
-
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
-        // bodyResponse = "{\"msg\":\"testing output\",\"ex\":\""+ ex.toString() +"\"}";
-        return handleExceptionInternal(ex,
-                // bodyResponse, 
-                ex,
-                headers,
-                HttpStatus.CONFLICT, request);
+    @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
+    protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        String param = ex.getName();
+        String msg = "Parameter '" + param + "' with value '" + ex.getValue() + "' is invalid";
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
+                .withStatus(status)
+                .withError_code(status.name())
+                .withMessage(msg)
+                .withDetail(ex.getLocalizedMessage())
+                .build();
+        return new ResponseEntity<>(response, status);
     }
 
     @Override
-    @ExceptionHandler({MethodArgumentTypeMismatchException.class})
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
             HttpHeaders headers,
             HttpStatus status,
             WebRequest request
     ) {
+        List<String> errors = new ArrayList<>();
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+            errors.add(error.getField() + ": " + error.getDefaultMessage());
+        }
 
-        ApiErrorResponse response;
-
-        response = ApiErrorResponseBuilder.anApiErrorResponse()
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
                 .withStatus(status)
                 .withError_code(HttpStatus.BAD_REQUEST.name())
-                .withMessage(ex.getLocalizedMessage())
+                .withMessage("Validation failed")
+                .withDetail(errors.toString())
                 .build();
 
-        return new ResponseEntity<>(response, response.getStatus());
-    }
-
-    // Respository Constrain Violations
-    @ExceptionHandler({RepositoryConstraintViolationException.class})
-    public ResponseEntity<Object> handleAccessDeniedException(
-            RuntimeException ex, WebRequest request) {
-
-        RepositoryConstraintViolationException nevEx;
-
-        nevEx = (RepositoryConstraintViolationException) ex;
-
-        String errors = nevEx.getErrors().getAllErrors()
-                .stream()
-                .map(p -> p.toString())
-                .collect(Collectors.joining("\n"));
-
-        return new ResponseEntity<>(errors,
-                new HttpHeaders(),
-                HttpStatus.PARTIAL_CONTENT);
+        return new ResponseEntity<>(response, status);
     }
 
     @ExceptionHandler({ConstraintViolationException.class})
-    public ResponseEntity<Object> handleConstraintViolation(
-                                        ConstraintViolationException ex, 
-                                        WebRequest request) 
-    {
-        List<String> errors = new ArrayList<String>();
-        
+    public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex, WebRequest request) {
+        List<String> errors = new ArrayList<>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
-            errors.add(violation.getRootBeanClass().getName() 
-                    + " " + violation.getPropertyPath() 
-                    + ": " + violation.getMessage()
-            );
+            errors.add(violation.getPropertyPath() + ": " + violation.getMessage());
         }
-        
-        
-        ApiError apiError = new ApiError(
-                HttpStatus.BAD_REQUEST, 
-                ex.getLocalizedMessage(), 
-                errors
-            );
-        
-        
-        
-        return new ResponseEntity<Object>(
-                        apiError, 
-                        new HttpHeaders(), 
-                        apiError.getStatus()
-                    );
-    }
-    
-    
-    // Sale Service
-    @ExceptionHandler({SaleServiceException.class})    
-    public ResponseEntity<ApiErrorResponse> handleServiceException(Exception ex){
-        
-        SaleServiceException saleEx = (SaleServiceException) ex;
-        
-        ApiErrorResponse response;
-        HttpStatus status = HttpStatus.BAD_REQUEST;
 
-        response = ApiErrorResponseBuilder.anApiErrorResponse()
-                .withStatus(status)
-                .withError_code(String.valueOf(status.value()))
-                .withMessage(status.getReasonPhrase())
-                .withDetail(saleEx.toString())
-                .build();
-        
-        return new ResponseEntity<>(response, response.getStatus());
-        
+        ApiError apiError = new ApiError(
+                HttpStatus.BAD_REQUEST,
+                "Constraint violation",
+                errors
+        );
+
+        return new ResponseEntity<>(apiError, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
-    
+
+    @ExceptionHandler({MerchantNotFoundException.class})
+    public ResponseEntity<ApiErrorResponse> handleMerchantNotFound(MerchantNotFoundException ex) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
+                .withStatus(status)
+                .withError_code(status.name())
+                .withMessage(ex.getMessage() != null ? ex.getMessage() : "Merchant not found")
+                .withDetail("Merchant id does not exist")
+                .build();
+
+        return new ResponseEntity<>(response, status);
+    }
+
+    @ExceptionHandler({SaleNotFoundException.class})
+    public ResponseEntity<ApiErrorResponse> handleSaleNotFound(SaleNotFoundException ex) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
+                .withStatus(status)
+                .withError_code(status.name())
+                .withMessage(ex.getMessage() != null ? ex.getMessage() : "Sale not found")
+                .withDetail("Sale id does not exist")
+                .build();
+
+        return new ResponseEntity<>(response, status);
+    }
+
+    @ExceptionHandler({SaleServiceException.class})
+    public ResponseEntity<ApiErrorResponse> handleServiceException(SaleServiceException ex) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
+                .withStatus(status)
+                .withError_code(status.name())
+                .withMessage(ex.getMessage())
+                .withDetail(ex.getLocalizedMessage())
+                .build();
+
+        return new ResponseEntity<>(response, status);
+    }
+
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    public ResponseEntity<ApiErrorResponse> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        String causeMsg = ex.getMostSpecificCause() != null ? ex.getMostSpecificCause().getMessage() : ex.getMessage();
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
+                .withStatus(status)
+                .withError_code(status.name())
+                .withMessage("Database constraint violation")
+                .withDetail(causeMsg)
+                .build();
+
+        return new ResponseEntity<>(response, new HttpHeaders(), status);
+    }
 
     @ExceptionHandler(value = {Exception.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ApiErrorResponse> unknownException(Exception ex) {
-    	ApiErrorResponse response;
-    	
-    	response = ApiErrorResponseBuilder.anApiErrorResponse()
-    			.withMessage(ex.getMessage())
-    			.withStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    			.withDetail(ex.getCause().getLocalizedMessage())
-    			.build();
-        
-        return new ResponseEntity<>(response, 
-        		new HttpHeaders(),
-                HttpStatus.INTERNAL_SERVER_ERROR);
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        String causeMsg = ex.getCause() != null ? ex.getCause().getLocalizedMessage() : ex.getLocalizedMessage();
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
+                .withStatus(status)
+                .withError_code(status.name())
+                .withMessage(ex.getMessage() != null ? ex.getMessage() : "Internal error")
+                .withDetail(causeMsg)
+                .build();
 
+        return new ResponseEntity<>(response, new HttpHeaders(), status);
     }
-
 }

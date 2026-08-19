@@ -1,47 +1,6 @@
-/*
-*  erros exp: are not processable errors like server failure.
-
- * // ACTION SALE FLOW
-// 1) [POST] \create {params} : merchant service call
-//      errors expected: bad request, server
-
-//      a) check valid params @ controller
-//      errors expected: NO                              
-//
-//      b) Invoke SaleServiceImpl create create
-//
-//          1.b) test idempotence @ repository
-//                 errors expected: hibernate          
-
-//          2.b) test valid merchant @ REST
-//                i) handle REST request Errors
-//                      errors expected: REST errors
-//
-//          3.b) convert amount @ service
-//                 errors expected: NO          
-
-//          4.b) create create entity
-//              i) save @ entity
-//                  expected errors: Hiberante, Database
-//          
-//              
-// ERROR NOT UNIQUE(merchantId, transactionID) 
-// get currency
-// ERROR NOT READY 
- */
 package aserron.dlocal.demo.pm.data.service;
 
-import antlr.collections.List;
-import java.time.Instant;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Optional;
-import java.util.logging.Logger;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
+import aserron.dlocal.demo.pm.consumer.fixerio.FixerioService;
 import aserron.dlocal.demo.pm.data.domain.Sale;
 import aserron.dlocal.demo.pm.data.domain.TransactionStatus;
 import aserron.dlocal.demo.pm.data.repositories.SaleRepository;
@@ -50,204 +9,155 @@ import aserron.dlocal.demo.pm.rest.controllers.SaleNotFoundException;
 import aserron.dlocal.demo.pm.rest.dto.BalanceResponse;
 import aserron.dlocal.demo.pm.rest.dto.CreateSaleRequest;
 import aserron.dlocal.demo.pm.rest.exception.ErrorMessages;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
-import javax.validation.ConstraintViolationException;
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 @Service
 public class SaleServiceImpl implements SaleService {
 
-    private static final Logger logger = Logger.getLogger(SaleServiceImpl.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(SaleServiceImpl.class);
 
-    public static Sale buildSale(CreateSaleRequest saleRequest) {
-
-        // create the new entity.
-        Sale sale = new Sale();
-
-        // post params
-        sale.setCurrency(saleRequest.getCurrency());
-        sale.setAmountOrg(saleRequest.getAmount());
-        sale.setAmountUsd(saleRequest.getAmount());
-        sale.setMerchantId(saleRequest.getMerchant_id());
-        sale.setTransactionId(saleRequest.getTransaction_id());
-
-        // complete values
-        sale.setCreated(Date.from(Instant.now()));
-        sale.setStatus(TransactionStatus.PENDING);
-
-        return sale;
-    }
-
-    // data repo
     private final SaleRepository saleRepository;
-
-    // services
     private final MerchantService merchantService;
+    private final FixerioService fixerioService;
 
-    // constructor
-    public SaleServiceImpl(SaleRepository saleRepository) {
-        this.saleRepository  = saleRepository;
-        this.merchantService = new MerchantService();
+    @Autowired
+    public SaleServiceImpl(SaleRepository saleRepository, MerchantService merchantService, FixerioService fixerioService) {
+        this.saleRepository = saleRepository;
+        this.merchantService = merchantService;
+        this.fixerioService = fixerioService;
     }
-    
-    // accessors
+
+    @Override
+    public Sale create(CreateSaleRequest request) {
+        if (request == null) {
+            throw new SaleServiceException("Sale request cannot be null");
+        }
+
+        // 1. Validate Merchant via REST call to Merchant app
+        validateMerchant(request.getMerchant_id());
+
+        // 2. Idempotency Check (Fast-path): if tuple (merchant_id, transaction_id) exists, return the existing sale
+        Optional<Sale> existing = saleRepository.findByMerchantIdAndTransactionId(
+                request.getMerchant_id(),
+                request.getTransaction_id()
+        );
+        if (existing.isPresent()) {
+            logger.info("Idempotency hit for merchant {} and transaction {}: returning existing sale {}",
+                    request.getMerchant_id(), request.getTransaction_id(), existing.get().getId());
+            return existing.get();
+        }
+
+        // 3. Convert Amount to USD using Fixer.io
+        BigDecimal amountUsd = fixerioService.convertCurrencyAmount(request.getCurrency(), request.getAmount());
+
+        // 4. Build Sale entity
+        Sale sale = new Sale();
+        sale.setMerchantId(request.getMerchant_id());
+        sale.setTransactionId(request.getTransaction_id());
+        sale.setCurrency(request.getCurrency().toUpperCase());
+        sale.setAmountOrg(request.getAmount());
+        sale.setAmountUsd(amountUsd);
+        sale.setStatus(TransactionStatus.PENDING);
+        sale.setCreated(Date.from(Instant.now()));
+
+        // 5. Immediate Flush & Concurrent Collision Recovery
+        try {
+            return saleRepository.saveAndFlush(sale);
+        } catch (DataIntegrityViolationException e) {
+            logger.warn("Concurrent race condition detected for merchant {} and transaction {}. Recovering existing record.",
+                    request.getMerchant_id(), request.getTransaction_id());
+
+            return saleRepository.findByMerchantIdAndTransactionId(request.getMerchant_id(), request.getTransaction_id())
+                    .orElseThrow(() -> e);
+        }
+    }
+
+    @Override
+    public Sale getById(UUID id) {
+        if (id == null) {
+            throw new SaleNotFoundException("null");
+        }
+        return saleRepository.findById(id)
+                .orElseThrow(() -> new SaleNotFoundException(id.toString()));
+    }
+
+    @Override
+    public BalanceResponse balanceByMerchantId(Long merchantId) {
+        return balance(merchantId, null, null);
+    }
+
+    @Override
+    public BalanceResponse balance(Long merchantId, Date from, Date to) {
+        if (merchantId == null) {
+            throw new SaleServiceException("Merchant ID cannot be null");
+        }
+
+        Collection<Sale> sales;
+        if (from != null && to != null) {
+            sales = saleRepository.findAllByMerchantIdAndCreatedBetween(merchantId, from, to);
+        } else if (from != null) {
+            sales = saleRepository.findAllByMerchantIdAndCreatedGreaterThanEqual(merchantId, from);
+        } else if (to != null) {
+            sales = saleRepository.findAllByMerchantIdAndCreatedLessThanEqual(merchantId, to);
+        } else {
+            sales = saleRepository.findAllByMerchantId(merchantId);
+        }
+
+        BalanceResponse response = new BalanceResponse();
+        response.setMerchantId(merchantId);
+
+        if (sales != null) {
+            for (Sale sale : sales) {
+                if (sale.getStatus() != null && sale.getAmountUsd() != null) {
+                    response.addStatusAmount(sale.getStatus(), sale.getAmountUsd());
+                }
+            }
+        }
+
+        return response;
+    }
+
+    private void validateMerchant(Long merchantId) {
+        if (merchantId == null) {
+            throw new SaleServiceException(ErrorMessages.SALE_SERV_INVAL_MERCHANT_ID.getErrorMessage());
+        }
+
+        try {
+            ResponseEntity<String> response = merchantService.getMerchantById(merchantId);
+            if (response == null || response.getStatusCode() != HttpStatus.OK) {
+                throw new MerchantNotFoundException(merchantId.toString());
+            }
+        } catch (MerchantNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.warn("Validation failed for merchant {}: {}", merchantId, e.getMessage());
+            throw new MerchantNotFoundException(merchantId.toString());
+        }
+    }
+
+    @Override
     public SaleRepository getSaleRepository() {
         return saleRepository;
     }
 
+    @Override
     public MerchantService getMerchantService() {
         return merchantService;
     }
 
-    // main functionality
-    
-    // POST/sale
-    public Sale create(CreateSaleRequest request) {
-        
-        Sale newSale;
-        
-        try {
-
-            validateSaleRequest(request);
-            
-            newSale = createSale(request);            
-            
-            return persistSale(newSale);
-
-        } catch (MerchantNotFoundException e) {
-            
-            // consolidate error handling to this service
-            throw new SaleServiceException(
-                    ErrorMessages.SALE_SERV_INVAL_MERCHANT_ID.getErrorMessage(),
-                     e
-            );
-
-        }
+    public FixerioService getFixerioService() {
+        return fixerioService;
     }
-
-    // GET/balance
-    public BalanceResponse balanceByMerchantId(Long merchantId) {
-        BalanceResponse balanceResponse;
-
-        balanceResponse = new BalanceResponse();
-        balanceResponse.setMerchantId(merchantId);
-
-        Collection<Sale> sales = this.getSaleRepository().findAllByMerchantId(merchantId);
-
-        logger.info("> balance: MAPPING TRANSACTIONS");
-
-        sales.forEach((Sale t) -> {
-
-            logger.info("status: {}" + t.getStatus());
-
-            balanceResponse.addStatusAmount(
-                    t.getStatus(),
-                    t.getAmountUsd()
-            );
-
-        });
-
-        logger.info("BALANCE: {}" + balanceResponse);
-
-        return balanceResponse;
-    }
-
-    // GET/{Id}
-    public Sale getById(UUID id) {
-        Optional<Sale> sale = this.getSaleRepository().findById(id);
-
-        if (!sale.isPresent()) {
-            throw new SaleNotFoundException(id.toString());
-        }
-
-        return sale.get();
-    }
-
-    // create entity from valid params
-    private Sale createSale(CreateSaleRequest params) {
-        return buildSale(params);
-    }
-    
-    private Sale persistSale(Sale sale){
-        return getSaleRepository().save(sale);
-    }
-
-    // Sale request validation
-    private void validateSaleRequest(CreateSaleRequest params)
-            throws MerchantNotFoundException {
-        if (!isValidMerchant(params)) {
-            throw new MerchantNotFoundException(
-                    params.getMerchant_id().toString());
-
-        } else if (!isValidIdPair(params)) {
-
-            throw new SaleServiceException(
-                    ErrorMessages.SALE_SERV_SALE_IDS_NOT_UNIQUE.getErrorMessage());
-        } else {
-
-            // all ok, perhaps more validation?
-        }
-    }
-
-    private boolean isUniqueSale(Sale newSale){
-        
-        Optional<Sale> oldSale = this.getSaleRepository().findByMerchantIdAndTransactionId(
-                        newSale.getMerchantId(),
-                        newSale.getTransactionId()
-                
-                );
-        
-        if(!oldSale.isPresent()){
-            
-            return true;
-            
-        } else if(oldSale.get().equals(newSale)) {
-            
-            return false;
-            
-        }else{
-        
-            return (newSale.getId() != oldSale.get().getId());
-        }
-        
-        
-        
-        
-    }
-            
-    private boolean isValidIdPair(CreateSaleRequest params) {
-    	
-        boolean isInvalid;
-
-        // the pair should not be present.
-        isInvalid = getSaleRepository()
-                .existsByMerchantIdAndTransactionId(
-                        params.getMerchant_id(),
-                        params.getTransaction_id());
-
-        return (isInvalid == false);
-    }
-
-    private boolean isValidMerchant(CreateSaleRequest params) {
-        // verify the merchant against the REST service check.
-        boolean result = true;
-        ResponseEntity<String> checkMerchant;
-
-        checkMerchant = this.getMerchantCheck(params.getMerchant_id());
-
-        if (checkMerchant.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
-            result = false;
-        }
-
-        return result;
-    }
-
-    // helper functions
-    private ResponseEntity<String> getMerchantCheck(Long merchant_id) {
-        ResponseEntity<String> response;
-        response = this.merchantService.getMerchantById(merchant_id);
-        return response;
-    }
-
 }

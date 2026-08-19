@@ -1,61 +1,40 @@
 package aserron.dlocal.demo.pm.rest.dto;
+
 import aserron.dlocal.demo.pm.data.domain.TransactionStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
-/**
- * Model the "balance" REST action response.
- * @author Andres
- */
 
 public class BalanceResponse implements Serializable {
 
     private static final long serialVersionUID = 488895936461508228L;
-    
+
+    @JsonIgnore
     private long merchantId;
 
-    private BigDecimal total_paid     = BigDecimal.ZERO;
-    private BigDecimal total_pending  = BigDecimal.ZERO;
+    private BigDecimal total_paid = BigDecimal.ZERO;
+    private BigDecimal total_pending = BigDecimal.ZERO;
     private BigDecimal total_rejected = BigDecimal.ZERO;
-    
-    /**
-     * Adds an amount to a given status total money amount.
-     * Helper function for the balance REST action.
-     * @param status
-     * @param amount 
-     */
-    public void addStatusAmount (TransactionStatus status,BigDecimal amount){
-        
+
+    public void addStatusAmount(TransactionStatus status, BigDecimal amount) {
+        if (status == null || amount == null) {
+            return;
+        }
         switch (status) {
             case PAID:
-                this.setTotal_paid(getTotal_paid().add(amount));
+                this.setTotal_paid(this.getTotal_paid().add(amount));
                 break;
             case PENDING:
-                this.setTotal_pending(getTotal_pending().add(amount));
+                this.setTotal_pending(this.getTotal_pending().add(amount));
                 break;
             case REJECTED:
-                this.setTotal_rejected(getTotal_rejected().add(amount));
+                this.setTotal_rejected(this.getTotal_rejected().add(amount));
                 break;
             default:
                 break;
         }
-        
     }
 
-    @Override
-    public String toString() {
-        return "Merchant id:"
-                + this.merchantId
-                +" balance > "
-                +" pending=" + this.getTotal_pending()
-                +" paid=" +this.getTotal_paid()
-                +" rejected="+this.getTotal_rejected()
-                +"";
-                
-    }
-    
-    
-    // setters & getters
-    
     public long getMerchantId() {
         return merchantId;
     }
@@ -88,10 +67,13 @@ public class BalanceResponse implements Serializable {
         this.total_rejected = total_rejected;
     }
 
-    
-    
-    
-    
-       
-    
+    @Override
+    public String toString() {
+        return "BalanceResponse{" +
+                "merchantId=" + merchantId +
+                ", total_paid=" + total_paid +
+                ", total_pending=" + total_pending +
+                ", total_rejected=" + total_rejected +
+                '}';
+    }
 }

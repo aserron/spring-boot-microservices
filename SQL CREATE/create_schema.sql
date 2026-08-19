@@ -55,6 +55,8 @@ CREATE INDEX `fk_sales_merchants1_idx` ON `dlocal_demo_db`.`sales` (`merchants_i
 
 CREATE UNIQUE INDEX `id_UNIQUE` ON `dlocal_demo_db`.`sales` (`id` ASC);
 
+CREATE UNIQUE INDEX `uk_sales_merchant_tx` ON `dlocal_demo_db`.`sales` (`merchants_id` ASC, `transaction_id` ASC);
+
 -- begin attached script 'merchants data'
 insert into merchants (id, name) values (1, 'Wordware');
 insert into merchants (id, name) values (2, 'Topicstorm');

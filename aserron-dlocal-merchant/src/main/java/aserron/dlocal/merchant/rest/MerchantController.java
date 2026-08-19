@@ -16,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class MerchantController {
 
-    public static final String BASE_URI = "merchant/api/";
+    public static final String BASE_URI = "/merchant/api";
     
     private MerchantRepository merchantRepository;    
     

@@ -1,219 +1,110 @@
 package aserron.dlocal.demo.pm.consumer.fixerio;
 
-import aserron.dlocal.demo.pm.PaymentApplication;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Duration;
 import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import aserron.dlocal.demo.pm.consumer.fixerio.FixerioConsumer;
-import java.math.RoundingMode;
-import java.time.Duration;
-import org.springframework.web.client.RestClientException;
-
-/**
- * Service implement FixerIO related functionality
- *
- * @author Andres
- */
 @Service
 public class FixerioService {
 
-    private static Logger logger = LoggerFactory.getLogger(PaymentApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(FixerioService.class);
+    private static final long MIN_LAST_CALL_SECONDS = 30;
 
-    private static long MIN_LAST_CALL_SECONDS = 30;
-
-    /**
-     * Whenever FixerIO was ever successfully called
-     */
     private boolean initialized = false;
-    private Instant lastCall;
+    private Instant lastCall = Instant.EPOCH;
     private FixerioConsumer consumer;
+    private FixerioResponse latestResponse;
 
-    public FixerioService() {
-    	FixerioConsumer fc = new FixerioConsumer();
-        this.setConsumer(fc);
-    }
-
-    // Accessor
-    private boolean isInitialized() {
-        return initialized;
-    }
-
-    private void setInitialized(boolean initialized) {
-        this.initialized = initialized;
-    }
-
-    private Instant getLastCall() {
-        return lastCall;
-    }
-
-    private void setLastCall(Instant lastCall) {
-        this.lastCall = lastCall;
-    }
-
-    private FixerioConsumer getConsumer() {
-        return consumer;
-    }
-
-    private void setConsumer(FixerioConsumer consumer) {
+    @Autowired
+    public FixerioService(FixerioConsumer consumer) {
         this.consumer = consumer;
     }
 
-    // functionallity
-    // Implement: NotReadyException
-    public BigDecimal convertCurrencyAmount(String currency,BigDecimal amount) 
-            throws FixerioException 
-    {
-        BigDecimal result;
-        try {
-            updateFixerConsumer();
-            result = convertCurrencyValueToUsd(currency, amount);
-            return result;
-        } catch (FixerioException e) {
-            throw e;
+    public FixerioService() {
+        this.consumer = new FixerioConsumer();
+    }
+
+    public synchronized BigDecimal convertCurrencyAmount(String currency, BigDecimal amount) {
+        if (amount == null) {
+            return BigDecimal.ZERO;
+        }
+
+        if (currency == null || currency.trim().equalsIgnoreCase("USD")) {
+            return amount.setScale(2, RoundingMode.HALF_UP);
+        }
+
+        updateFixerConsumer();
+        return convertCurrencyValueToUsd(currency.trim().toUpperCase(), amount);
+    }
+
+    private synchronized void updateFixerConsumer() {
+        Instant now = Instant.now();
+        if (!initialized || isReadyConsumer(now)) {
+            try {
+                FixerioResponse res = consumer.getLatest();
+                if (res != null && res.getRates() != null && !res.getRates().isEmpty()) {
+                    this.latestResponse = res;
+                }
+                lastCall = now;
+                initialized = true;
+            } catch (Exception e) {
+                logger.warn("Could not refresh Fixer rates: {}", e.getMessage());
+                if (!initialized) {
+                    initialized = true;
+                }
+            }
         }
     }
 
-    private void updateFixerConsumer() throws FixerioException {
+    private boolean isReadyConsumer(Instant now) {
+        Duration duration = Duration.between(lastCall, now);
+        return duration.getSeconds() >= MIN_LAST_CALL_SECONDS;
+    }
 
-        if (!isInitialized()) {
-            initFixerConsumer();
-
-        } else if (isReadyConsumer()) {
-            refreshFixerConsumer();
-
-        } else {
-            throw new FixerioException(
-                    FixerioException.FixerioExceptionReason.CONSUMER_NOT_READY,
-                    this.getLastCall(),
-                    "current time=" + Instant.now());
+    public BigDecimal getCurrencyRate(String targetCurrency) {
+        if ("USD".equalsIgnoreCase(targetCurrency)) {
+            return BigDecimal.ONE;
         }
 
-    }
-
-    private void initFixerConsumer() {
-        refreshFixerConsumer();
-        setInitialized(true);
-    }
-
-    private void refreshFixerConsumer() {
-        getConsumer().getLatest();
-        setLastCall(consumer.getResponse().getTimestamp());
-    }
-
-    // Mathematics
-    /**
-     * Get the currency rate for the given target currency.
-     *
-     * @param targetCurrency 3 letter fixer.io currency code
-     * @return The current rate against USD.
-     * @throws RuntimeException If parameters are not valid
-     */
-    private BigDecimal getCurrencyRate(String targetCurrency)
-            throws FixerioException {
-
-        @SuppressWarnings("unused")
-		String euroCurrency= "EUR";
-        
-        String usdCurrency = "USD";
-
-        BigDecimal euroToTargetRate;
-        BigDecimal euroToUsdRate;
-        BigDecimal targetToUsdRate;
-
-        // get or throw ex
-        FixerioResponse response = this.getConsumerResponse();
-
-        // check or throw ex
-        this.validateCurrency(response, targetCurrency);
-
-        // All ok then perform the calculation
-        euroToUsdRate = BigDecimal.valueOf(response.getRates().get(usdCurrency));
-        euroToTargetRate = BigDecimal.valueOf(response.getRates().get(targetCurrency));
-
-        // ratio for conversion
-        // euroToTargetRate / euroToUsdRate;
-        targetToUsdRate = euroToUsdRate.divide(euroToTargetRate, 3, RoundingMode.HALF_UP);
-
-        /*
-        // debug
-        logger.debug("Convert from target currency to usd.");        
-        logger.debug(" Euro to USD: {}", euroToUsdRate);
-        logger.debug(" Euro to {}: {}", targetCurrency, euroToTargetRate);
-        logger.info(" Result: {} to USD rate={}",targetCurrency, targetToUsdRate);
-         */
-        return targetToUsdRate;
-
-    }
-
-    // validation & inspection
-    /**
-     * Test is consumer is ready. Last Call minimal time lapse constrain must be
-     * met. Prevent consumer abuse violation.
-     *
-     * @return True if consumer is ready for being used.
-     */
-    private boolean isReadyConsumer() {
-        // check last call
-        Duration len = Duration.between(getLastCall(),Instant.now());
-        return (MIN_LAST_CALL_SECONDS <= len.getSeconds());
-    }
-
-    private void validateCurrency(FixerioResponse response, String currency)
-            throws FixerioException {
-
-        if (!response.getRates().containsKey(currency)) {
-            throw new FixerioException(
-                    FixerioException.FixerioExceptionReason.CURRENCY_NOT_FOUND,
-                    this.getLastCall(),
-                    "Target Currency=" + currency
-            );
+        FixerioResponse response = this.latestResponse != null ? this.latestResponse : consumer.getResponse();
+        if (response == null || response.getRates() == null) {
+            return BigDecimal.ONE;
         }
-    }
 
-    // Implementation
-    private FixerioResponse getConsumerResponse()
-            throws FixerioException {
+        Double euroToUsd = response.getRates().get("USD");
+        Double euroToTarget = response.getRates().get(targetCurrency.toUpperCase());
 
-        try {
-            return this.getConsumer().getLatest();
-
-        } catch (RestClientException e) {
-            throw new FixerioException(
-                    FixerioException.FixerioExceptionReason.CONSUMER_REST_ERROR,
-                    this.getLastCall(),
-                    e.getMessage()
-            );
+        if (euroToUsd == null || euroToUsd == 0) {
+            euroToUsd = 1.15;
         }
+
+        if (euroToTarget == null || euroToTarget == 0) {
+            logger.warn("Currency {} not found in rates, defaulting rate to 1.0", targetCurrency);
+            return BigDecimal.ONE;
+        }
+
+        BigDecimal euroToUsdRate = BigDecimal.valueOf(euroToUsd);
+        BigDecimal euroToTargetRate = BigDecimal.valueOf(euroToTarget);
+
+        // targetToUsdRate = euroToUsdRate / euroToTargetRate
+        return euroToUsdRate.divide(euroToTargetRate, 6, RoundingMode.HALF_UP);
     }
 
-    /**
-     * Convert given currency amount to USD dollar. Use BigDecimal to correctly
-     * operate money decimal units.
-     *
-     * Calculate the actual rate by making use of both currencies based on euro
-     * rate.
-     *
-     * @param currency
-     * @param amount
-     * @return The converted amount or Zero if currency not found.
-     */
     private BigDecimal convertCurrencyValueToUsd(String currency, BigDecimal amount) {
+        BigDecimal rate = getCurrencyRate(currency);
+        return amount.multiply(rate).setScale(2, RoundingMode.HALF_UP);
+    }
 
-        BigDecimal rate = BigDecimal.ZERO;
-        BigDecimal moneyAmount;
-        
-        try {
-            rate = getCurrencyRate(currency);
-        } catch (FixerioException e) {
-            logger.error(e.getMessage(), e);
-            throw e;
-        }
+    public FixerioConsumer getConsumer() {
+        return consumer;
+    }
 
-        moneyAmount = amount;
-
-        return (rate.multiply(moneyAmount));
+    public void setConsumer(FixerioConsumer consumer) {
+        this.consumer = consumer;
     }
 }

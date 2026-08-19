@@ -195,14 +195,15 @@ public class ApiErrorResponseBuilder {
      * @todo Add null check before build.
      */
     public ApiErrorResponse build() {
-        
-
         ApiErrorResponse apiErrorResponse = new ApiErrorResponse();
         
         apiErrorResponse.setHttpStatus(this.htttpStatus);
-        apiErrorResponse.setError(this.error);
+        apiErrorResponse.setStatus(this.htttpStatus != null ? this.htttpStatus.value() : 0);
+        apiErrorResponse.setError(this.error != null && !this.error.isEmpty() ? this.error : (this.htttpStatus != null ? this.htttpStatus.name() : ""));
         apiErrorResponse.setDetail(this.detail);
         apiErrorResponse.setMessage(this.message);
+        apiErrorResponse.setErrors(this.errors);
+        apiErrorResponse.setTimestamp(java.time.Instant.now());
 
         return apiErrorResponse;
     }

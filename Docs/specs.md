@@ -9,7 +9,6 @@ El PM intenta procesar los request y enviar al cliente la información esencial 
 
 En este caso es procesar las transacciones y cambiar el estado del balance.  
   
-  
 Implementacion
 
 Base de datos:
@@ -158,3 +157,43 @@ Otro es el EntityResponseControllerAdvice, este tiene enfoque al tipo de respues
 De lograr esto se pude lograr una respuesta controlada y que nos permite trabajar más rápido al evitar que la aplicación se caiga por excepciones a veces obvias.
 
 También podemos como se logró en merchant tener una vista rica en el REST del error y de cola de errores previos.
+
+---
+
+```mermaid
+sequenceDiagram
+    autonumber
+        participant Client
+        participant Controller as ManagerController
+        participant Service as SaleServiceImpl
+        participant Repo as SaleRepository
+        participant DB as Database (MySQL / H2)
+
+        Client->>Controller: POST /pm/sale
+        Controller->>Service: create(request)
+        Service->>Repo: findByMerchantIdAndTransactionId()
+        alt Record Already Exists (Sequential Replay)
+            Repo-->>Service: Optional<Sale> (Found)
+            Service-->>Controller: Existing Sale Entity
+            Controller-->>Client: 200 OK {"id": "<existing_uuid>"}
+        else Record Not Found (New Request / Concurrent Race)
+            Repo-->>Service: Optional.empty()
+            Service->>Service: Convert Currency to USD (Fixer.io)
+            Service->>Repo: save(new Sale)
+            Repo->>DB: INSERT INTO sales
+            alt Normal Insert
+                DB-->>Repo: Saved Row
+                Repo-->>Service: Saved Sale Entity
+                Service-->>Controller: Sale
+                Controller-->>Client: 200 OK {"id": "<new_uuid>"}
+            else Concurrent Conflict (Race Condition)
+                Note over DB,Service: Handled via DB Unique Constraint + Catch
+                DB-->>Repo: DataIntegrityViolationException
+                Repo-->>Service: Catch Exception & Re-query
+                Service->>Repo: findByMerchantIdAndTransactionId()
+                Repo-->>Service: Existing Sale Entity
+                Service-->>Controller: Sale
+                Controller-->>Client: 200 OK {"id": "<winning_thread_uuid>"}
+            end
+        end
+```

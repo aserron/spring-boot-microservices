@@ -1,79 +1,55 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aserron.dlocal.demo.pm.rest.dto;
-
-import java.text.SimpleDateFormat;
 
 import aserron.dlocal.demo.pm.data.domain.Sale;
 import aserron.dlocal.demo.pm.data.domain.TransactionStatus;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 
 public class StatusResponse {
-	
-	private static String DATE_FORMAT = "yyyyy-mm-dd hh:mm:ss";
-    
-    public static StatusResponse createFrom(Sale sale){
-        
+
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    public static StatusResponse createFrom(Sale sale) {
         SimpleDateFormat dt = new SimpleDateFormat(DATE_FORMAT);
-        
         StatusResponse response = new StatusResponse();
-        
-        response.setId(sale.getId().toString());        
-        response.setMerchant_id(sale.getMerchantId().toString());
-        response.setTransaction_id(sale.getTransactionId().toString());
-        
-        response.setDate(dt.format(sale.getCreated()));
+
+        response.setId(sale.getId() != null ? sale.getId().toString() : null);
+        response.setMerchant_id(sale.getMerchantId() != null ? sale.getMerchantId().toString() : null);
+        response.setTransaction_id(sale.getTransactionId() != null ? sale.getTransactionId().toString() : null);
+        response.setAmount_usd(sale.getAmountUsd());
+        response.setDate(sale.getCreated() != null ? dt.format(sale.getCreated()) : null);
         response.setStatus(sale.getStatus());
-        
+
         return response;
-    };
+    }
 
     private String id;
     private String date;
     private String merchant_id;
     private String transaction_id;
+    private BigDecimal amount_usd;
     private TransactionStatus status;
 
-    /**
-     * @return the id
-     */
     public String getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(String id) {
         this.id = id;
     }
 
-    /**
-     * @return the date
-     */
     public String getDate() {
         return date;
     }
 
-    /**
-     * @param date the date to set
-     */
     public void setDate(String date) {
         this.date = date;
     }
 
-    /**
-     * @return the merchant_id
-     */
     public String getMerchant_id() {
         return merchant_id;
     }
 
-    /**
-     * @param merchant_id the merchant_id to set
-     */
     public void setMerchant_id(String merchant_id) {
         this.merchant_id = merchant_id;
     }
@@ -86,20 +62,19 @@ public class StatusResponse {
         this.transaction_id = transaction_id;
     }
 
-  
+    public BigDecimal getAmount_usd() {
+        return amount_usd;
+    }
 
-    /**
-     * @return the status
-     */
+    public void setAmount_usd(BigDecimal amount_usd) {
+        this.amount_usd = amount_usd;
+    }
+
     public TransactionStatus getStatus() {
         return status;
     }
 
-    /**
-     * @param status the status to set
-     */
     public void setStatus(TransactionStatus status) {
         this.status = status;
     }
-
 }

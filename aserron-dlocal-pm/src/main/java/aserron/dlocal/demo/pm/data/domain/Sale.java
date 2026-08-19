@@ -1,9 +1,9 @@
 package aserron.dlocal.demo.pm.data.domain;
 
-
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,92 +13,70 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.annotation.Validated;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.io.Serializable;
-import java.util.UUID;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Validated
-@Table(name = "sales")
+@Table(name = "sales", uniqueConstraints = {
+    @UniqueConstraint(name = "uk_sales_merchant_tx", columnNames = {"merchants_id", "transaction_id"})
+})
 public class Sale implements Serializable {
 
     private static final long serialVersionUID = 5354508214418045835L;
-    
-    
-    
+
     @Id
-    @NotNull
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    /**
-     * Merchant identifier.
-     */
     @NotNull
     @Positive
     @JsonProperty("merchant_id")
     @Column(name = "merchants_id")
     private Long merchantId;
 
-    /**
-     * 3 letter currency code conforming ISO specs.
-     */
     @NotBlank
     @Length(min = 3, max = 3)
+    @Column(name = "currency")
     private String currency;
 
-    /**
-     * Original currency money amount
-     */
     @NotNull
     @Positive
     @Column(name = "amount_org")
     private BigDecimal amountOrg;
-    
-   
-    /**
-     * Money Amount In Usd Dollar
-     */
+
     @NotNull
     @Positive
     @Column(name = "amount_usd")
     private BigDecimal amountUsd;
 
-    /**
-     * Sale's transaction status.
-     */
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private TransactionStatus status;
 
-    /**
-     * Sale's creation date. The time is stored in MySQL DateTime derived from
-     * time stamp passed by
-     */
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created")
     private Date created;
 
-    /**
-     * Provided external id for transaction associated to the sale
-     */
     @NotNull
     @Positive
     @JsonProperty("transaction_id")
     @Column(name = "transaction_id")
     private Long transactionId;
 
-    // Accessors
+    public Sale() {
+    }
+
     public UUID getId() {
         return id;
     }
@@ -137,7 +115,7 @@ public class Sale implements Serializable {
 
     public void setAmountUsd(BigDecimal amountUsd) {
         this.amountUsd = amountUsd;
-    }    
+    }
 
     public TransactionStatus getStatus() {
         return status;
@@ -159,7 +137,7 @@ public class Sale implements Serializable {
         return transactionId;
     }
 
-    public void setTransactionId(Long transaction_id) {
-        this.transactionId = transaction_id;
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
     }
 }
