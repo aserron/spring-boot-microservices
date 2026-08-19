@@ -11,6 +11,8 @@ public interface SaleService {
 
     Sale create(CreateSaleRequest request);
 
+    Sale create(CreateSaleRequest request, String idempotencyKey);
+
     Sale getById(UUID id);
 
     BalanceResponse balanceByMerchantId(Long merchantId);
