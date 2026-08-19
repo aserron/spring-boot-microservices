@@ -23,18 +23,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class IdempotencyServiceImpl implements IdempotencyService {
 
     private static final Logger logger = LoggerFactory.getLogger(IdempotencyServiceImpl.class);
-    private static final long IN_FLIGHT_WAIT_MS = 500;
+    private static final long IN_FLIGHT_WAIT_MS = 2000;
     private static final long IN_FLIGHT_POLL_INTERVAL_MS = 50;
 
     private final IdempotencyRecordRepository idempotencyRecordRepository;
+    private final org.springframework.transaction.support.TransactionTemplate requiresNewTxTemplate;
 
     @Autowired
-    public IdempotencyServiceImpl(IdempotencyRecordRepository idempotencyRecordRepository) {
+    public IdempotencyServiceImpl(
+            IdempotencyRecordRepository idempotencyRecordRepository,
+            org.springframework.transaction.PlatformTransactionManager transactionManager
+    ) {
         this.idempotencyRecordRepository = idempotencyRecordRepository;
+        this.requiresNewTxTemplate = new org.springframework.transaction.support.TransactionTemplate(transactionManager);
+        this.requiresNewTxTemplate.setPropagationBehavior(org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRES_NEW);
     }
 
     @Override
-    @Transactional
     public ClaimResult claim(
             String clientId,
             String operationName,
@@ -47,10 +52,11 @@ public class IdempotencyServiceImpl implements IdempotencyService {
         }
 
         // 1. Fast-Path Pre-Check
-        Optional<IdempotencyRecord> existingOpt = idempotencyRecordRepository
-                .findByClientIdAndOperationNameAndIdempotencyKey(clientId, operationName, idempotencyKey);
+        Optional<IdempotencyRecord> existingOpt = requiresNewTxTemplate.execute(status ->
+                idempotencyRecordRepository.findByClientIdAndOperationNameAndIdempotencyKey(clientId, operationName, idempotencyKey)
+        );
 
-        if (existingOpt.isPresent()) {
+        if (existingOpt != null && existingOpt.isPresent()) {
             return evaluateExistingRecord(existingOpt.get(), clientId, operationName, idempotencyKey, requestHash, ttl);
         }
 
@@ -64,14 +70,20 @@ public class IdempotencyServiceImpl implements IdempotencyService {
         );
 
         try {
-            IdempotencyRecord saved = idempotencyRecordRepository.saveAndFlush(newRecord);
+            IdempotencyRecord saved = requiresNewTxTemplate.execute(status ->
+                    idempotencyRecordRepository.saveAndFlush(newRecord)
+            );
             logger.debug("Claimed new idempotency lease {} for key [{}]", saved.getId(), idempotencyKey);
             return ClaimResult.newClaim(saved);
         } catch (DataIntegrityViolationException e) {
             logger.warn("Concurrent collision detected on idempotency claim for key [{}]", idempotencyKey);
-            IdempotencyRecord collided = idempotencyRecordRepository
-                    .findByClientIdAndOperationNameAndIdempotencyKey(clientId, operationName, idempotencyKey)
-                    .orElseThrow(() -> e);
+            Optional<IdempotencyRecord> collidedOpt = requiresNewTxTemplate.execute(status ->
+                    idempotencyRecordRepository.findByClientIdAndOperationNameAndIdempotencyKey(clientId, operationName, idempotencyKey)
+            );
+            IdempotencyRecord collided = (collidedOpt != null && collidedOpt.isPresent()) ? collidedOpt.get() : null;
+            if (collided == null) {
+                throw e;
+            }
 
             return evaluateExistingRecord(collided, clientId, operationName, idempotencyKey, requestHash, ttl);
         }
@@ -109,9 +121,10 @@ public class IdempotencyServiceImpl implements IdempotencyService {
                     Thread.currentThread().interrupt();
                     break;
                 }
-                Optional<IdempotencyRecord> pollOpt = idempotencyRecordRepository
-                        .findByClientIdAndOperationNameAndIdempotencyKey(clientId, operationName, idempotencyKey);
-                if (pollOpt.isPresent() && pollOpt.get().getStatus() == IdempotencyStatus.COMPLETED) {
+                Optional<IdempotencyRecord> pollOpt = requiresNewTxTemplate.execute(status ->
+                        idempotencyRecordRepository.findByClientIdAndOperationNameAndIdempotencyKey(clientId, operationName, idempotencyKey)
+                );
+                if (pollOpt != null && pollOpt.isPresent() && pollOpt.get().getStatus() == IdempotencyStatus.COMPLETED) {
                     logger.info("Idempotency in-flight race resolved: returning completed result for key [{}]", idempotencyKey);
                     return ClaimResult.completed(pollOpt.get());
                 }
@@ -123,12 +136,19 @@ public class IdempotencyServiceImpl implements IdempotencyService {
 
         if (existing.getStatus() == IdempotencyStatus.FAILED) {
             logger.info("Idempotency retry: previous attempt failed for key [{}]. Granting new claim lease.", existing.getIdempotencyKey());
-            existing.setStatus(IdempotencyStatus.PENDING);
-            existing.setRequestHash(requestHash);
-            Instant now = Instant.now();
-            existing.setCreatedAt(Date.from(now));
-            existing.setExpiresAt(Date.from(now.plus(ttl != null ? ttl : Duration.ofHours(24))));
-            IdempotencyRecord updated = idempotencyRecordRepository.saveAndFlush(existing);
+            IdempotencyRecord updated = requiresNewTxTemplate.execute(status -> {
+                Optional<IdempotencyRecord> recOpt = idempotencyRecordRepository.findById(existing.getId());
+                if (recOpt.isPresent()) {
+                    IdempotencyRecord rec = recOpt.get();
+                    rec.setStatus(IdempotencyStatus.PENDING);
+                    rec.setRequestHash(requestHash);
+                    Instant now = Instant.now();
+                    rec.setCreatedAt(Date.from(now));
+                    rec.setExpiresAt(Date.from(now.plus(ttl != null ? ttl : Duration.ofHours(24))));
+                    return idempotencyRecordRepository.saveAndFlush(rec);
+                }
+                return existing;
+            });
             return ClaimResult.retriableFailed(updated);
         }
 
@@ -136,28 +156,32 @@ public class IdempotencyServiceImpl implements IdempotencyService {
     }
 
     @Override
-    @Transactional
     public void complete(UUID recordId, int httpStatus, String responseBody) {
         if (recordId == null) {
             return;
         }
-        idempotencyRecordRepository.findById(recordId).ifPresent(record -> {
-            record.markCompleted(httpStatus, responseBody);
-            idempotencyRecordRepository.save(record);
-            logger.debug("Marked idempotency record {} as COMPLETED (HTTP {})", recordId, httpStatus);
+        requiresNewTxTemplate.execute(status -> {
+            idempotencyRecordRepository.findById(recordId).ifPresent(record -> {
+                record.markCompleted(httpStatus, responseBody);
+                idempotencyRecordRepository.saveAndFlush(record);
+                logger.debug("Marked idempotency record {} as COMPLETED (HTTP {})", recordId, httpStatus);
+            });
+            return null;
         });
     }
 
     @Override
-    @Transactional
     public void fail(UUID recordId) {
         if (recordId == null) {
             return;
         }
-        idempotencyRecordRepository.findById(recordId).ifPresent(record -> {
-            record.markFailed();
-            idempotencyRecordRepository.save(record);
-            logger.warn("Marked idempotency record {} as FAILED", recordId);
+        requiresNewTxTemplate.execute(status -> {
+            idempotencyRecordRepository.findById(recordId).ifPresent(record -> {
+                record.markFailed();
+                idempotencyRecordRepository.saveAndFlush(record);
+                logger.warn("Marked idempotency record {} as FAILED", recordId);
+            });
+            return null;
         });
     }
 
