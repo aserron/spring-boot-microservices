@@ -54,8 +54,11 @@ public class ManagerController {
      * Response: { "id": String }
      */
     @PostMapping("/sale")
-    public ResponseEntity<Map<String, String>> createSale(@Valid @RequestBody CreateSaleRequest params) {
-        Sale sale = saleService.create(params);
+    public ResponseEntity<Map<String, String>> createSale(
+            @Valid @RequestBody CreateSaleRequest params,
+            @org.springframework.web.bind.annotation.RequestHeader(value = "Idempotency-Key", required = false) String idempotencyKey
+    ) {
+        Sale sale = saleService.create(params, idempotencyKey);
         return ResponseEntity.ok(Collections.singletonMap("id", sale.getId().toString()));
     }
 

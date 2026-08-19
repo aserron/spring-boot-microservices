@@ -115,6 +115,47 @@ public class PmResponseEntityExceptionHandler extends ResponseEntityExceptionHan
         return new ResponseEntity<>(response, status);
     }
 
+    @ExceptionHandler({IdempotencyRequestInFlightException.class})
+    public ResponseEntity<ApiErrorResponse> handleIdempotencyInFlight(IdempotencyRequestInFlightException ex) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
+                .withStatus(status)
+                .withError_code(status.name())
+                .withMessage(ex.getMessage() != null ? ex.getMessage() : "A matching request is currently in-flight")
+                .withDetail("Request in progress, retry after delay")
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Retry-After", "1");
+        return new ResponseEntity<>(response, headers, status);
+    }
+
+    @ExceptionHandler({IdempotencyFingerprintMismatchException.class})
+    public ResponseEntity<ApiErrorResponse> handleIdempotencyMismatch(IdempotencyFingerprintMismatchException ex) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
+                .withStatus(status)
+                .withError_code(status.name())
+                .withMessage(ex.getMessage() != null ? ex.getMessage() : "Idempotency key payload mismatch")
+                .withDetail("The idempotency key was reused with a different request payload")
+                .build();
+
+        return new ResponseEntity<>(response, status);
+    }
+
+    @ExceptionHandler({MissingIdempotencyHeaderException.class})
+    public ResponseEntity<ApiErrorResponse> handleMissingIdempotencyHeader(MissingIdempotencyHeaderException ex) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
+                .withStatus(status)
+                .withError_code(status.name())
+                .withMessage(ex.getMessage() != null ? ex.getMessage() : "Missing Idempotency-Key header")
+                .withDetail("Idempotency-Key is required for this operation")
+                .build();
+
+        return new ResponseEntity<>(response, status);
+    }
+
     @ExceptionHandler({SaleServiceException.class})
     public ResponseEntity<ApiErrorResponse> handleServiceException(SaleServiceException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
