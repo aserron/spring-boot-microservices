@@ -8,6 +8,8 @@ package aserron.dlocal.merchant.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -25,8 +27,7 @@ public class Merchant {
      * Merchant ID
      */
     @Id
-    @NotNull
-    @Positive
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     
@@ -34,9 +35,10 @@ public class Merchant {
      * Merchant Name
      */
     @NotBlank
+    @Column(name = "name")
     private String  name;
 
-    private Merchant(){};
+    public Merchant() {}
     
     public Merchant(Long id, String name) {
         this.id   = id;

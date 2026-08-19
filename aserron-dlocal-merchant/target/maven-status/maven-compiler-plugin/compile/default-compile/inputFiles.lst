@@ -1,0 +1,11 @@
+E:\aserron\demo\spring-boot-microservices\aserron-dlocal-merchant\src\main\java\aserron\dlocal\merchant\exc\dto\ApiErrorStatus.java
+E:\aserron\demo\spring-boot-microservices\aserron-dlocal-merchant\src\main\java\aserron\dlocal\merchant\rest\MerchantController.java
+E:\aserron\demo\spring-boot-microservices\aserron-dlocal-merchant\src\main\java\aserron\dlocal\merchant\domain\MerchantRepository.java
+E:\aserron\demo\spring-boot-microservices\aserron-dlocal-merchant\src\main\java\aserron\dlocal\merchant\exc\dto\ApiErrorResponseBuilder.java
+E:\aserron\demo\spring-boot-microservices\aserron-dlocal-merchant\src\main\java\aserron\dlocal\merchant\rest\MerchantNotFoundException.java
+E:\aserron\demo\spring-boot-microservices\aserron-dlocal-merchant\src\main\java\aserron\dlocal\merchant\MerchantRestApplication.java
+E:\aserron\demo\spring-boot-microservices\aserron-dlocal-merchant\src\main\java\aserron\dlocal\merchant\exc\dto\ApiErrorResponse.java
+E:\aserron\demo\spring-boot-microservices\aserron-dlocal-merchant\src\main\java\aserron\dlocal\merchant\exc\handler\RepositoryExcHdl.java
+E:\aserron\demo\spring-boot-microservices\aserron-dlocal-merchant\src\main\java\aserron\dlocal\merchant\exc\handler\RestControllerExcHdl.java
+E:\aserron\demo\spring-boot-microservices\aserron-dlocal-merchant\src\main\java\aserron\dlocal\merchant\domain\Merchant.java
+E:\aserron\demo\spring-boot-microservices\aserron-dlocal-merchant\src\main\java\aserron\dlocal\merchant\exc\dto\ApiError.java

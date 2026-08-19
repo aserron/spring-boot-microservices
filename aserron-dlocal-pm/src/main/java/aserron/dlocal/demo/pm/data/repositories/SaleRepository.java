@@ -1,25 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aserron.dlocal.demo.pm.data.repositories;
 
 import aserron.dlocal.demo.pm.data.domain.Sale;
+import aserron.dlocal.demo.pm.data.domain.TransactionStatus;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;
 
-public interface SaleRepository extends CrudRepository<Sale, UUID> {  
+public interface SaleRepository extends CrudRepository<Sale, UUID> {
 
     @Override
-    public Collection<Sale> findAll();
-    
-    public Collection<Sale> findAllByMerchantId(Long merchantId);
+    Collection<Sale> findAll();
 
-    public Optional<Sale> findByMerchantIdAndTransactionId(Long merchantId, Long transactionId);
+    Collection<Sale> findAllByMerchantId(Long merchantId);
 
-    public boolean existsByMerchantIdAndTransactionId(Long merchantId, Long transactionId);
-    
+    Collection<Sale> findAllByStatus(TransactionStatus status);
+
+    Collection<Sale> findAllByMerchantIdAndCreatedBetween(Long merchantId, Date from, Date to);
+
+    Collection<Sale> findAllByMerchantIdAndCreatedGreaterThanEqual(Long merchantId, Date from);
+
+    Collection<Sale> findAllByMerchantIdAndCreatedLessThanEqual(Long merchantId, Date to);
+
+    Optional<Sale> findByMerchantIdAndTransactionId(Long merchantId, Long transactionId);
+
+    boolean existsByMerchantIdAndTransactionId(Long merchantId, Long transactionId);
 }

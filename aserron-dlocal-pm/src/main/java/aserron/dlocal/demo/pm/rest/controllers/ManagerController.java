@@ -1,42 +1,4 @@
-/*
- 
-    Not Implemented signatures
-
-        @PutMapping("/{id}")
-        public ResponseEntity<?> put(@PathVariable String id, @RequestBody Object input) 
-
-        @PostMapping
-        public ResponseEntity<?> post(@RequestBody Object input)
-
-        @DeleteMapping("/{id}")
-        public ResponseEntity<?> delete(@PathVariable String id) 
-
- */
 package aserron.dlocal.demo.pm.rest.controllers;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import aserron.dlocal.demo.pm.data.domain.Sale;
 import aserron.dlocal.demo.pm.data.service.MerchantService;
@@ -45,15 +7,29 @@ import aserron.dlocal.demo.pm.data.service.TransactionJobService;
 import aserron.dlocal.demo.pm.rest.dto.BalanceResponse;
 import aserron.dlocal.demo.pm.rest.dto.CreateSaleRequest;
 import aserron.dlocal.demo.pm.rest.dto.StatusResponse;
-import aserron.dlocal.demo.pm.rest.exception.ApiError;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
+import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Control REST routes, and method implementation. Handle invocation exceptions.
- * Runs a timed scheduled task.
- *
- * @author Andres
- */
 @RestController
 @Validated
 @EnableScheduling
@@ -62,115 +38,83 @@ public class ManagerController {
 
     private static final Logger logger = LoggerFactory.getLogger(ManagerController.class);
 
-    public  static Logger getLogger() {
-        return logger;
-    }
-    
-    // instance members
-
-    // services
     private final SaleService saleService;
-    @SuppressWarnings("unused")
     private final TransactionJobService jobService;
     private final MerchantService merchantService;
 
-    /**
-     * Constructor
-     * 
-     * @param saleService A SaleService instance. (injected)
-     */
     @Autowired
-    public ManagerController(SaleService saleService) {
-
-        this.saleService     = saleService;
-        this.jobService      = new TransactionJobService(saleService.getSaleRepository());
-        this.merchantService = new MerchantService();
-
+    public ManagerController(SaleService saleService, TransactionJobService jobService, MerchantService merchantService) {
+        this.saleService = saleService;
+        this.jobService = jobService;
+        this.merchantService = merchantService;
     }
 
     /**
-     * POST /sale 
-     * @param params
-     * @return 
+     * POST /pm/sale
+     * Response: { "id": String }
      */
     @PostMapping("/sale")
-    public Sale createSale(
-            @Valid @RequestBody CreateSaleRequest params) 
-    {
-        return getSaleService().create(params);
+    public ResponseEntity<Map<String, String>> createSale(@Valid @RequestBody CreateSaleRequest params) {
+        Sale sale = saleService.create(params);
+        return ResponseEntity.ok(Collections.singletonMap("id", sale.getId().toString()));
     }
 
     /**
-     * GET /status/{id} 
-     * @param id
-     * @return 
+     * GET /pm/status/{id}
      */
     @GetMapping("/status/{id}")
-    public StatusResponse getMerchantStatus(
-                @Valid
-                @PathVariable(name = "id",required = true)
-                @Pattern(regexp = "^[0-9]{1,+}$", message = "Integer number expected for [id]")                
-                String id )
-    {
-        return StatusResponse.createFrom(getSaleService().getById(UUID.fromString(id)));
+    public ResponseEntity<StatusResponse> getMerchantStatus(@PathVariable("id") String id) {
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(id.trim());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid UUID format for sale ID: " + id);
+        }
+        Sale sale = saleService.getById(uuid);
+        return ResponseEntity.ok(StatusResponse.createFrom(sale));
     }
-    
+
     /**
-     * POST /balance 
-     * @param id Merchant ID
-     * 
-     * @return Balance for the given Merchant
+     * GET /pm/balance?merchant_id=...&from=...&to=...
+     */
+    @GetMapping("/balance")
+    public ResponseEntity<BalanceResponse> getBalance(
+            @RequestParam(name = "merchant_id", required = true) Long merchantId,
+            @RequestParam(name = "from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+            @RequestParam(name = "to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to
+    ) {
+        Date fromDate = from != null ? Date.from(from.atZone(ZoneId.systemDefault()).toInstant()) : null;
+        Date toDate = to != null ? Date.from(to.atZone(ZoneId.systemDefault()).toInstant()) : null;
+
+        BalanceResponse balance = saleService.balance(merchantId, fromDate, toDate);
+        return ResponseEntity.ok(balance);
+    }
+
+    /**
+     * GET /pm/balance/{id}
      */
     @GetMapping("/balance/{id}")
-    public BalanceResponse balance(@PathVariable String id) {
-        return getSaleService().balanceByMerchantId(Long.parseLong(id));
+    public ResponseEntity<BalanceResponse> getBalanceByPath(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(saleService.balanceByMerchantId(id));
     }
-    
-    
+
     /**
-     * GET /all/status 
-     * List status for all sale in the system
-     * Debug action.
-     * @return 
+     * GET /pm/all/status
      */
     @GetMapping("/all/status")
-    public Collection<Sale> list() {
-        return this.getSaleService().getSaleRepository().findAll();
-
+    public ResponseEntity<Collection<Sale>> listAllSales() {
+        return ResponseEntity.ok(saleService.getSaleRepository().findAll());
     }
 
-
-    // Error Handling    
-    @ExceptionHandler(SaleNotFoundException.class)
-    public ResponseEntity<Object> handleError(HttpServletRequest req, RuntimeException ex) {
-        // return new ResponseEntity<>(new Object(),HttpStatus.NOT_FOUND);
-        List<String> errors = new ArrayList<String>();
-        errors.add(req.getQueryString());
-        
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, 
-                                            ex.getLocalizedMessage(), 
-                                            errors
-                                        );
-        
-
-         return new ResponseEntity<Object>(
-                        apiError, 
-                        new HttpHeaders(), 
-                        apiError.getStatus()
-                    );
-        
-    }
-    
-    // Setters & Getters      
     public SaleService getSaleService() {
         return saleService;
     }
+
     public TransactionJobService getJobService() {
         return jobService;
     }
+
     public MerchantService getMerchantService() {
         return merchantService;
     }
-
-    
 }

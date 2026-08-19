@@ -194,7 +194,7 @@ public class RepositoryExcHdl extends ResponseEntityExceptionHandler {
     @ExceptionHandler({
         MerchantNotFoundException.class
     })
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ApiErrorResponse> handleMerchantError(MerchantNotFoundException ex, HttpServletResponse response) {
 
         HttpStatus status    = HttpStatus.NOT_FOUND;        
