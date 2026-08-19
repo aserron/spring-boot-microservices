@@ -4,6 +4,7 @@ import aserron.dlocal.demo.pm.data.domain.Sale;
 import aserron.dlocal.demo.pm.data.domain.TransactionStatus;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface SaleRepository extends JpaRepository<Sale, UUID> {
 
     @Override
-    Collection<Sale> findAll();
+    List<Sale> findAll();
 
     Collection<Sale> findAllByMerchantId(Long merchantId);
 
