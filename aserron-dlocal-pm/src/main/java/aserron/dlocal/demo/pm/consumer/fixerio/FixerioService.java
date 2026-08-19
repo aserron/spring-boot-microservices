@@ -18,6 +18,7 @@ public class FixerioService {
     private boolean initialized = false;
     private Instant lastCall = Instant.EPOCH;
     private FixerioConsumer consumer;
+    private FixerioResponse latestResponse;
 
     @Autowired
     public FixerioService(FixerioConsumer consumer) {
@@ -45,7 +46,10 @@ public class FixerioService {
         Instant now = Instant.now();
         if (!initialized || isReadyConsumer(now)) {
             try {
-                consumer.getLatest();
+                FixerioResponse res = consumer.getLatest();
+                if (res != null && res.getRates() != null && !res.getRates().isEmpty()) {
+                    this.latestResponse = res;
+                }
                 lastCall = now;
                 initialized = true;
             } catch (Exception e) {
@@ -67,7 +71,7 @@ public class FixerioService {
             return BigDecimal.ONE;
         }
 
-        FixerioResponse response = consumer.getResponse();
+        FixerioResponse response = this.latestResponse != null ? this.latestResponse : consumer.getResponse();
         if (response == null || response.getRates() == null) {
             return BigDecimal.ONE;
         }
