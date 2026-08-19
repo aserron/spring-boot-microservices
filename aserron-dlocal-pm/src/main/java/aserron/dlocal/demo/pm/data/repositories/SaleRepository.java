@@ -6,9 +6,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SaleRepository extends CrudRepository<Sale, UUID> {
+public interface SaleRepository extends JpaRepository<Sale, UUID> {
 
     @Override
     Collection<Sale> findAll();

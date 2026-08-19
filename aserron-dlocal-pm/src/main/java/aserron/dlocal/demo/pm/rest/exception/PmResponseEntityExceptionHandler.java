@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -125,6 +126,20 @@ public class PmResponseEntityExceptionHandler extends ResponseEntityExceptionHan
                 .build();
 
         return new ResponseEntity<>(response, status);
+    }
+
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    public ResponseEntity<ApiErrorResponse> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        String causeMsg = ex.getMostSpecificCause() != null ? ex.getMostSpecificCause().getMessage() : ex.getMessage();
+        ApiErrorResponse response = ApiErrorResponseBuilder.anApiErrorResponse()
+                .withStatus(status)
+                .withError_code(status.name())
+                .withMessage("Database constraint violation")
+                .withDetail(causeMsg)
+                .build();
+
+        return new ResponseEntity<>(response, new HttpHeaders(), status);
     }
 
     @ExceptionHandler(value = {Exception.class})

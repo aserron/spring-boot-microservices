@@ -18,6 +18,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class SaleServiceImpl implements SaleService {
         // 1. Validate Merchant via REST call to Merchant app
         validateMerchant(request.getMerchant_id());
 
-        // 2. Idempotency Check: if tuple (merchant_id, transaction_id) exists, return the existing sale
+        // 2. Idempotency Check (Fast-path): if tuple (merchant_id, transaction_id) exists, return the existing sale
         Optional<Sale> existing = saleRepository.findByMerchantIdAndTransactionId(
                 request.getMerchant_id(),
                 request.getTransaction_id()
@@ -61,7 +62,7 @@ public class SaleServiceImpl implements SaleService {
         // 3. Convert Amount to USD using Fixer.io
         BigDecimal amountUsd = fixerioService.convertCurrencyAmount(request.getCurrency(), request.getAmount());
 
-        // 4. Build and persist new Sale
+        // 4. Build Sale entity
         Sale sale = new Sale();
         sale.setMerchantId(request.getMerchant_id());
         sale.setTransactionId(request.getTransaction_id());
@@ -71,7 +72,16 @@ public class SaleServiceImpl implements SaleService {
         sale.setStatus(TransactionStatus.PENDING);
         sale.setCreated(Date.from(Instant.now()));
 
-        return saleRepository.save(sale);
+        // 5. Immediate Flush & Concurrent Collision Recovery
+        try {
+            return saleRepository.saveAndFlush(sale);
+        } catch (DataIntegrityViolationException e) {
+            logger.warn("Concurrent race condition detected for merchant {} and transaction {}. Recovering existing record.",
+                    request.getMerchant_id(), request.getTransaction_id());
+
+            return saleRepository.findByMerchantIdAndTransactionId(request.getMerchant_id(), request.getTransaction_id())
+                    .orElseThrow(() -> e);
+        }
     }
 
     @Override
