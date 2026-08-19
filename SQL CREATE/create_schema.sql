@@ -57,6 +57,28 @@ CREATE UNIQUE INDEX `id_UNIQUE` ON `dlocal_demo_db`.`sales` (`id` ASC);
 
 CREATE UNIQUE INDEX `uk_sales_merchant_tx` ON `dlocal_demo_db`.`sales` (`merchants_id` ASC, `transaction_id` ASC);
 
+-- -----------------------------------------------------
+-- Table `dlocal_demo_db`.`idempotency_records`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dlocal_demo_db`.`idempotency_records` ;
+
+CREATE TABLE IF NOT EXISTS `dlocal_demo_db`.`idempotency_records` (
+  `id` BINARY(16) NOT NULL COMMENT 'Unique identifier for the idempotency record.',
+  `client_id` VARCHAR(64) NOT NULL,
+  `operation_name` VARCHAR(128) NOT NULL,
+  `idempotency_key` VARCHAR(128) NOT NULL,
+  `request_hash` VARCHAR(71) NOT NULL COMMENT 'SHA-256 fingerprint formatted as sha256:<hex>',
+  `status` ENUM('PENDING','COMPLETED','FAILED') NOT NULL DEFAULT 'PENDING',
+  `response_status` INT NULL,
+  `response_body` LONGTEXT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `expires_at` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `uk_idempotency_client_op_key` (`client_id` ASC, `operation_name` ASC, `idempotency_key` ASC),
+  INDEX `idx_idempotency_expires` (`expires_at` ASC, `status` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
 -- begin attached script 'merchants data'
 insert into merchants (id, name) values (1, 'Wordware');
 insert into merchants (id, name) values (2, 'Topicstorm');
