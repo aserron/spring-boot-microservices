@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -23,7 +24,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Validated
-@Table(name = "sales")
+@Table(name = "sales", uniqueConstraints = {
+    @UniqueConstraint(name = "uk_sales_merchant_tx", columnNames = {"merchants_id", "transaction_id"})
+})
 public class Sale implements Serializable {
 
     private static final long serialVersionUID = 5354508214418045835L;
